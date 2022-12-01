@@ -5,6 +5,7 @@ import Main from './components/Main/Main';
 import NavBar from './components/NavBar/NavBar';
 import GamePage from './components/GamePage/GamePage';
 import OnlineGame from './components/OnlineGame/OnlineGame';
+import PlayersPage from './components/PlayersPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         {/* <Route path="/womens" element={<Womens />} /> */}
         {/* <Route path="/electronics" element={<Electronics />} /> */}
         <Route path="/game" element={<GamePage />} />
+        <Route path="/players" element={<PlayersPage />} />
         {/* <Route path="/:id" element={<OneCard />} /> */}
       </Routes>
     </Container>
