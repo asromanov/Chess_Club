@@ -5,6 +5,7 @@ const FileStore = require('session-file-store')(session);
 const cors = require('cors');
 const http = require('http');
 const wss = require('./webSocket');
+const authRouter = require('./routes/authRouter');
 
 require('dotenv').config();
 
