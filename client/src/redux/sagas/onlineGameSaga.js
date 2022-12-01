@@ -2,26 +2,24 @@ import {
   take, put, call, takeEvery, fork,
 } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
-import { SET_WS, SOCKET_INIT, UPDATE_STATUS } from '../types';
+import { ACTIVE_MOVE, GAME_INIT } from '../types';
 
-function createSocketChannel(socket, action) {
+function createGame(socket, action) {
   return eventChannel((emit) => {
     socket.onopen = () => {
-      console.log('action --->', action);
-      emit({ type: SET_WS, payload: true });
+      emit({ type: GAME_INIT, payload: true });
     };
 
     socket.onerror = function (error) {
-      emit({ type: SET_WS, payload: null });
+      emit({ type: GAME_INIT, payload: null });
     };
 
     socket.onmessage = function (event) {
-      console.log('message --->>', JSON.parse(event.data));
       emit(JSON.parse(event.data));
     };
 
     socket.onclose = function (event) {
-      emit({ type: SET_WS, payload: null });
+      emit({ type: GAME_INIT, payload: null });
     };
 
     return () => {
@@ -31,7 +29,7 @@ function createSocketChannel(socket, action) {
   });
 }
 
-function createWebSocketConnection() {
+function setActualDesk() {
   const newSocket = new WebSocket(process.env.REACT_APP_WSURL);
   console.log('Created WS:', newSocket);
   return newSocket;
