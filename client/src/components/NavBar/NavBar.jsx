@@ -18,15 +18,15 @@ export default function NavBar() {
           <Box mr={5}>
             <NavLink to="/" style={linkStyle}>Main</NavLink>
           </Box>
-          {/* <Box mr={5}>
-            <NavLink to="/jewelery" style={linkStyle}>Jewelery</NavLink>
+          <Box mr={5}>
+            <NavLink to="/login" style={linkStyle}>Login</NavLink>
           </Box>
           <Box mr={5}>
-            <NavLink to="/electronics" style={linkStyle}>Electronics</NavLink>
+            <NavLink to="/signup" style={linkStyle}>Sign Up</NavLink>
           </Box>
           <Box mr={5}>
-            <NavLink to="/mens" style={linkStyle}>Mens</NavLink>
-          </Box> */}
+            <NavLink to="/logout" style={linkStyle}>Log out</NavLink>
+          </Box>
           <Box mr={5}>
             <NavLink to="/onlinegame" style={linkStyle}>Online</NavLink>
           </Box>
