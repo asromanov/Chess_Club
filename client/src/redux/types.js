@@ -12,3 +12,6 @@ export const UPDATE_STATUS = 'UPDATE_STATUS';
 // WS
 export const SOCKET_INIT = 'SOCKET_INIT';
 export const SET_WS = 'SET_WS';
+// PLAY
+export const GAME_INIT = 'GAME_INIT';
+export const ACTIVE_MOVE = 'ACTIVE_MOVE';

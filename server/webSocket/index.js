@@ -10,7 +10,7 @@ wss.on('connection', (ws, request, wsMap) => {
   for (const [, wsClient] of wsMap) {
     wsClient.ws.send(
       JSON.stringify({
-        type: 'SET_ONLINE_USERS',
+        type: 'SET_ONLINE_PLAYERS',
         payload: Array.from(wsMap.values()).map((el) => el.user),
       }),
     );
@@ -30,7 +30,7 @@ wss.on('connection', (ws, request, wsMap) => {
           for (const [, wsClient] of wsMap) {
             wsClient.ws.send(
               JSON.stringify({
-                type: 'SET_ONLINE_USERS',
+                type: 'SET_ONLINE_PLAYERS',
                 payload: Array.from(wsMap.values()).map((el) => el.user),
               }),
             );
@@ -47,7 +47,7 @@ wss.on('connection', (ws, request, wsMap) => {
     for (const [, wsClient] of wsMap) {
       wsClient.ws.send(
         JSON.stringify({
-          type: 'SET_ONLINE_USERS',
+          type: 'SET_ONLINE_PLAYERS',
           payload: Array.from(wsMap.values()).map((el) => el.user),
         }),
       );
@@ -59,7 +59,7 @@ wss.on('connection', (ws, request, wsMap) => {
     for (const [, wsClient] of wsMap) {
       wsClient.ws.send(
         JSON.stringify({
-          type: 'SET_ONLINE_FRIENDS',
+          type: 'SET_ONLINE_PLAYERS',
           payload: Array.from(wsMap.values()).map((el) => el.user),
         }),
       );
@@ -67,4 +67,5 @@ wss.on('connection', (ws, request, wsMap) => {
   });
 });
 
+ws.on('');
 module.exports = wss;
