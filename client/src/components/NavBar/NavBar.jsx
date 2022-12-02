@@ -1,7 +1,11 @@
 import React from 'react';
-import { AppBar, Box, Toolbar } from '@mui/material';
+import {
+  AppBar, Box, Button, Toolbar,
+} from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import '@fontsource/roboto/500.css';
+import { logoutUserAsync } from '../../redux/actions/authActions';
 
 const linkStyle = {
   textDecoration: 'none',
@@ -11,6 +15,7 @@ const linkStyle = {
 };
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -25,7 +30,13 @@ export default function NavBar() {
             <NavLink to="/signup" style={linkStyle}>Sign Up</NavLink>
           </Box>
           <Box mr={5}>
-            <NavLink to="/logout" style={linkStyle}>Log out</NavLink>
+            <Button
+              style={linkStyle}
+              key="logout"
+              onClick={() => dispatch(logoutUserAsync())}
+            >
+              Logout
+            </Button>
           </Box>
           <Box mr={5}>
             <NavLink to="/onlinegame" style={linkStyle}>Online</NavLink>
