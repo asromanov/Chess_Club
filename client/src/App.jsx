@@ -9,6 +9,7 @@ import OnlineGame from './components/OnlineGame/OnlineGame';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignUpPage/SignUpPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
+import '@fontsource/roboto/400.css';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);

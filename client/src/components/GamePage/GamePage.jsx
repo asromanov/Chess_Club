@@ -49,6 +49,10 @@ export default function GamePage() {
       <Chessboard
         position={fen}
         onDrop={onDrop}
+        boardStyle={{
+          borderRadius: '5px',
+          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+        }}
       />
     </div>
   );
