@@ -1,6 +1,6 @@
 import { take } from 'redux-saga/effects';
 import {
-  MOVE_MADE, GAME_INIT, SEND_INVITE, SHOW_INVITE, ACCEPT_INVITE, GAME_OVER,
+  MOVE_MADE, SEND_INVITE, SHOW_INVITE, ACCEPT_INVITE, GAME_OVER,
 } from '../types';
 
 function* moveGame(socket) {
