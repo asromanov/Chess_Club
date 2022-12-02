@@ -27,5 +27,6 @@ module.exports = {
     'no-console': 0,
     'no-prompt': 0,
     'no-alert': 0,
+    'no-param-reassign': 0,
   },
 };
