@@ -5,7 +5,14 @@ const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 
 wss.on('connection', (ws, request, wsMap) => {
   const { id } = request.session.user;
-  wsMap.set(id, { ws, user: request.session.user }); // id -> ws
+  wsMap.set(id, {
+    ws,
+    user: request.session.user,
+    status: 'online', // ? gameover, in-game, mathcmaking, searching
+    room: null,
+    board: null,
+    opponent: null,
+  }); // id -> ws
 
   for (const [, wsClient] of wsMap) {
     wsClient.ws.send(
@@ -20,22 +27,59 @@ wss.on('connection', (ws, request, wsMap) => {
     const { type, payload } = JSON.parse(data);
 
     switch (type) {
-      case 'UPDATE_STATUS':
-        {
-          const user = await User.findByPk(id);
-          user.status = payload;
-          await user.save();
-
-          wsMap.set(id, { ws, user });
-          for (const [, wsClient] of wsMap) {
-            wsClient.ws.send(
-              JSON.stringify({
-                type: 'SET_ONLINE_PLAYERS',
-                payload: Array.from(wsMap.values()).map((el) => el.user),
-              }),
-            );
-          }
-        }
+      case 'SEND_INVITE':
+      {
+        const secPlayer = wsMap[payload];
+        const firPlayer = wsMap[id];
+        secPlayer.ws.send(
+          JSON.stringify({
+            type: 'SHOW_INVITE',
+            payload: firPlayer,
+          }),
+        );
+      }
+      case 'INVITE_DECLINED': {
+        const opponentId = wsMap[payload];
+        opponentId.ws.send(
+          JSON.stringify({
+            type: 'INVITE_DECLINED',
+            payload: opponentId,
+          }),
+        );
+      }
+      case 'ACCEPT_INVITE': {
+        const firstPlayer = wsMap[payload];
+        const secondPlayer = wsMap[id];
+        firstPlayer.opponent = secondPlayer;
+        secondPlayer.opponent = firstPlayer;
+        firstPlayer.room = firstPlayer.id;
+        secondPlayer.room = firstPlayer.id;
+        const gameData = { firstPlayer, secondPlayer, board: {} };
+        firstPlayer.ws.send(
+          JSON.stringify({
+            type: 'GAME_INIT',
+            payload: gameData,
+          }),
+        );
+        secondPlayer.ws.send(
+          JSON.stringify({
+            type: 'GAME_INIT',
+            payload: gameData,
+          }),
+        );
+      }
+      case 'MOVE_MADE': {
+        const playerMoved = wsMap[payload.playerId];
+        const otherPlayer = playerMoved.opponent;
+        // id1.board = brd;
+        // id2.board = brd;
+        otherPlayer.ws.send(
+          JSON.stringify({
+            type: 'MAKE_MOVE',
+            payload,
+          }),
+        );
+      }
         break;
       default:
         break;
@@ -67,5 +111,5 @@ wss.on('connection', (ws, request, wsMap) => {
   });
 });
 
-ws.on('');
+// ws.on('');
 module.exports = wss;

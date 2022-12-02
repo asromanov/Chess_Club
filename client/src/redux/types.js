@@ -12,6 +12,10 @@ export const UPDATE_STATUS = 'UPDATE_STATUS';
 // WS
 export const SOCKET_INIT = 'SOCKET_INIT';
 export const SET_WS = 'SET_WS';
-// PLAY
+// GAME
 export const GAME_INIT = 'GAME_INIT';
-export const ACTIVE_MOVE = 'ACTIVE_MOVE';
+export const MOVE_MADE = 'MOVE_MADE';
+export const SEND_INVITE = 'SEND_INVITE';
+export const SHOW_INVITE = 'SHOW_INVITE';
+export const ACCEPT_INVITE = 'ACCEPT_INVITE';
+export const GAME_OVER = 'GAME_OVER';

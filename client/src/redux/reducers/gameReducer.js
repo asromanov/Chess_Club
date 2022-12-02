@@ -1,4 +1,7 @@
-import { ACTIVE_MOVE, GAME_INIT } from '../types';
+import {
+  ACCEPT_INVITE,
+  GAME_INIT, MOVE_MADE, SEND_INVITE, SHOW_INVITE,
+} from '../types';
 
 const gameReducer = (
   state = {},
@@ -7,8 +10,14 @@ const gameReducer = (
   const { type, payload } = action;
   switch (type) {
     case GAME_INIT:
-      return { ...state, ...payload };
-    case ACTIVE_MOVE:
+      return { ...payload, board: {} };
+    case MOVE_MADE:
+      return payload;
+    case SEND_INVITE:
+      return payload;
+    case SHOW_INVITE:
+      return payload;
+    case ACCEPT_INVITE:
       return payload;
     default:
       return state;

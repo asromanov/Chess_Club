@@ -33,6 +33,9 @@ export default function NavBar() {
           <Box ml={20}>
             <NavLink to="/game" style={linkStyle}>Game</NavLink>
           </Box>
+          <Box ml={5}>
+            <NavLink to="/onlineuser" style={linkStyle}>Online Players</NavLink>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
