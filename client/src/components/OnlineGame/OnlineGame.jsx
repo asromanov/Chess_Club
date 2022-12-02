@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
-// import { Button, CardActions } from '@mui/material';
+import Timer from '@amplication/react-compound-timer';
 
 export default function GamePage() {
   const [fen, setFen] = useState('start');
@@ -87,6 +87,13 @@ export default function GamePage() {
     setFen(game.current.fen());
   };
 
+  const whoMoves = () => {
+    if (fen === 'start') {
+      return 'Ход белых';
+    }
+    return game?.current?.turn() === 'w' ? 'Ход белых' : 'Ход черных';
+  };
+
   return (
     <div style={{
       display: 'flex', marginTop: '50px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
@@ -101,7 +108,21 @@ export default function GamePage() {
             <Button size="big" onClick={resetGame}>Play Again</Button>
           </CardActions>
         </h1>
-      ) : <div />}
+      ) : <h2>{whoMoves()}</h2>}
+      <Timer initialTime={3 * 60 * 1000} direction="backward" startImmediately={false}>
+        {() => (
+          <>
+            <div style={{ display: 'flex' }}>
+              <strong>black - </strong>
+              <Timer.Minutes />
+              <span> : </span>
+              <Timer.Seconds />
+            </div>
+            {/* <button onClick={start}>Start</button>
+            <button onClick={stop}>Stop</button> */}
+          </>
+        )}
+      </Timer>
       <Chessboard
         position={fen}
         onDrop={onDrop}
@@ -110,6 +131,16 @@ export default function GamePage() {
           boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
         }}
       />
+      <Timer initialTime={3 * 60 * 1000} direction="backward" startImmediately={false}>
+        {() => (
+          <div style={{ display: 'flex' }}>
+            <strong>white - </strong>
+            <Timer.Minutes />
+            <span> : </span>
+            <Timer.Seconds />
+          </div>
+        )}
+      </Timer>
       <CardActions>
         <Button size="big" onClick={() => undoHandler()}>Undo</Button>
       </CardActions>
