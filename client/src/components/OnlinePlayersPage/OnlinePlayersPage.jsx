@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   List, ListItem, ListItemText, ListItemAvatar, Avatar, Button,
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-// import { useSelector } from 'react-redux';
+import { setPlayersListAsync } from '../../redux/actions/playersActions';
 
 export default function OnlinePlayersPage() {
-  // const users = useSelector((state) => state.players.friendsOnline);
-  const users = [{ name: 'user1' }, { name: 'user2' }, { name: 'user' }];
-  console.log(users);
+  const user = useSelector((state) => state.authUser);
+  const { friendsOnline = [] } = useSelector((state) => state.players);
+  const dispatch = useDispatch();
+  console.log(friendsOnline);
+
+  useEffect(() => {
+    dispatch(setPlayersListAsync(user.id));
+  }, []);
+
   return (
     <>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {users?.map((el) => (
-          <ListItem>
+        {friendsOnline?.map((el) => (
+          <ListItem key={el?.id}>
             <ListItemAvatar>
               <Avatar>
                 <ImageIcon />
@@ -23,14 +30,17 @@ export default function OnlinePlayersPage() {
           </ListItem>
         ))}
       </List>
-      {users.includes(user.id)
+      <Button>Пригласить</Button>
+      <Button>Принять</Button>
+      <Button>Отклонить</Button>
+      {/* {users.includes(user.id)
         ? <Button>Пригласить</Button>
         : (
           <>
             <Button>Принять</Button>
             <Button>Отклонить</Button>
           </>
-        )}
+        )} */}
     </>
   );
 }
