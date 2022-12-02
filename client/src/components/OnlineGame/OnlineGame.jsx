@@ -21,7 +21,7 @@ export default function GamePage() {
     if (game.current.isCheckmate()) {
       setGameOver({
         info1: 'Мат, ',
-        info2: `${game.current.turn() === 'w' ? 'белые' : 'черные'} проиграли`,
+        info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
       });
     }
     if (game.current.isDraw()) {
@@ -78,7 +78,13 @@ export default function GamePage() {
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
+    setGameOver();
     setFen('start');
+  };
+
+  const undoHandler = () => {
+    game.current.undo();
+    setFen(game.current.fen());
   };
 
   return (
@@ -99,7 +105,15 @@ export default function GamePage() {
       <Chessboard
         position={fen}
         onDrop={onDrop}
+        boardStyle={{
+          borderRadius: '5px',
+          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+        }}
       />
+      <CardActions>
+        <Button size="big" onClick={() => undoHandler()}>Undo</Button>
+      </CardActions>
+      <h2>{game?.current?.pgn()}</h2>
     </div>
   );
 }
