@@ -12,12 +12,12 @@ const playersReducer = (
       const friends = JSON.parse(JSON.stringify(state.friendsList));
 
       // eslint-disable-next-line no-restricted-syntax
-      for (const friend of payload) {
-        const index = friends.findIndex((el) => el.id === friend.id);
-        if (index !== -1) friends[index].status = friend.status;
+      for (const player of payload) {
+        const index = player.findIndex((el) => el.id === player.id);
+        if (index !== -1) friends[index].status = player.status;
       }
 
-      return { friendsOnline: payload, friendsList: payload };
+      return { playersOnline: payload, playerList: payload };
     }
     default:
       return state;

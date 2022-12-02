@@ -7,7 +7,7 @@ import {
   GAME_OVER,
   MOVE_MADE,
   SEND_INVITE,
-  SET_WS, SHOW_INVITE, SOCKET_INIT,
+  SET_WS, SOCKET_INIT,
 } from '../types';
 // import closeConnection from '../sagasFunctions/authFunctions';
 
@@ -62,8 +62,7 @@ function* gameOver(socket) {
   socket.send(JSON.stringify(message));
 }
 function* closeConnection(socket) {
-  const message = yield take('CLOSE_WEBSOCKET');
-  // socket.send(JSON.stringify(message));
+
   socket.close();
   yield put({ type: SET_WS, payload: null });
 }
@@ -75,7 +74,7 @@ function* playersListWorker(action) {
   yield fork(closeConnection, socket);
   yield fork(moveGame, socket);
   yield fork(sendInvite, socket);
-  yield fork(showInvite, socket);
+
   yield fork(acceptInvite, socket);
   yield fork(gameOver, socket);
 
