@@ -2,7 +2,11 @@ import {
   take, put, call, takeEvery, fork,
 } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
-import { SET_WS, SOCKET_INIT, UPDATE_STATUS } from '../types';
+import {
+   SET_WS, SOCKET_INIT
+} from '../types';
+import closeConnection from '../sagasFunctions/authFunctions';
+import { acceptInvite, gameConnection, gameOver, moveGame, sendInvite, showInvite } from '../sagasFunctions/gameFunctions';
 
 function createSocketChannel(socket, action) {
   return eventChannel((emit) => {
@@ -37,26 +41,27 @@ function createWebSocketConnection() {
   return newSocket;
 }
 
-function* updateStatus(socket) {
-  while (true) {
-    const message = yield take(UPDATE_STATUS);
-    socket.send(JSON.stringify(message));
-  }
-}
+const closeConnection = closeConnection()
+const gameConnection = gameConnection()
+const moveGame = moveGame()
+const sendInvite = sendInvite()
+const showInvite = showInvite()
+const acceptInvite = acceptInvite()
+const gameOver = gameOver()
 
-function* closeConnection(socket) {
-  const message = yield take('CLOSE_WEBSOCKET');
-  // socket.send(JSON.stringify(message));
-  socket.close();
-  yield put({ type: SET_WS, payload: null });
-}
 
-function* friendsListWorker(action) {
+function* playersListWorker(action) {
   const socket = yield call(createWebSocketConnection);
   const socketChannel = yield call(createSocketChannel, socket, action);
 
-  yield fork(updateStatus, socket);
+
   yield fork(closeConnection, socket);
+  yield fork(gameConnection, socket);
+  yield fork(moveGame, socket);
+  yield fork(sendInvite, socket);
+  yield fork(showInvite, socket);
+  yield fork(acceptInvite,socket)
+  yield fork(gameOver, socket)
 
   while (true) {
     try {
@@ -69,5 +74,5 @@ function* friendsListWorker(action) {
 }
 
 export default function* initWebSocketWatcher() {
-  yield takeEvery(SOCKET_INIT, friendsListWorker);
+  yield takeEvery(SOCKET_INIT, playersListWorker);
 }
