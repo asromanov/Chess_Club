@@ -3,10 +3,13 @@ import {
 } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
 import {
-   SET_WS, SOCKET_INIT
+  ACCEPT_INVITE,
+  GAME_OVER,
+  MOVE_MADE,
+  SEND_INVITE,
+  SET_WS, SHOW_INVITE, SOCKET_INIT,
 } from '../types';
-import closeConnection from '../sagasFunctions/authFunctions';
-import { acceptInvite, gameConnection, gameOver, moveGame, sendInvite, showInvite } from '../sagasFunctions/gameFunctions';
+// import closeConnection from '../sagasFunctions/authFunctions';
 
 function createSocketChannel(socket, action) {
   return eventChannel((emit) => {
@@ -16,6 +19,7 @@ function createSocketChannel(socket, action) {
     };
 
     socket.onerror = function (error) {
+      console.log(error);
       emit({ type: SET_WS, payload: null });
     };
 
@@ -25,6 +29,7 @@ function createSocketChannel(socket, action) {
     };
 
     socket.onclose = function (event) {
+      console.log(event);
       emit({ type: SET_WS, payload: null });
     };
 
@@ -40,28 +45,39 @@ function createWebSocketConnection() {
   console.log('Created WS:', newSocket);
   return newSocket;
 }
-
-const closeConnection = closeConnection()
-const gameConnection = gameConnection()
-const moveGame = moveGame()
-const sendInvite = sendInvite()
-const showInvite = showInvite()
-const acceptInvite = acceptInvite()
-const gameOver = gameOver()
-
+function* moveGame(socket) {
+  const message = yield take(MOVE_MADE);
+  socket.send(JSON.stringify(message));
+}
+function* sendInvite(socket) {
+  const message = yield take(SEND_INVITE);
+  socket.send(JSON.stringify(message));
+}
+function* acceptInvite(socket) {
+  const message = yield take(ACCEPT_INVITE);
+  socket.send(JSON.stringify(message));
+}
+function* gameOver(socket) {
+  const message = yield take(GAME_OVER);
+  socket.send(JSON.stringify(message));
+}
+function* closeConnection(socket) {
+  const message = yield take('CLOSE_WEBSOCKET');
+  // socket.send(JSON.stringify(message));
+  socket.close();
+  yield put({ type: SET_WS, payload: null });
+}
 
 function* playersListWorker(action) {
   const socket = yield call(createWebSocketConnection);
   const socketChannel = yield call(createSocketChannel, socket, action);
 
-
   yield fork(closeConnection, socket);
-  yield fork(gameConnection, socket);
   yield fork(moveGame, socket);
   yield fork(sendInvite, socket);
   yield fork(showInvite, socket);
-  yield fork(acceptInvite,socket)
-  yield fork(gameOver, socket)
+  yield fork(acceptInvite, socket);
+  yield fork(gameOver, socket);
 
   while (true) {
     try {

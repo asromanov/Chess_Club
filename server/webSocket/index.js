@@ -30,7 +30,7 @@ wss.on('connection', (ws, request, wsMap) => {
       case 'SEND_INVITE':
       {
         const secPlayer = wsMap[payload];
-        const firPlayer = id;
+        const firPlayer = wsMap[id];
         secPlayer.ws.send(
           JSON.stringify({
             type: 'SHOW_INVITE',
@@ -38,11 +38,11 @@ wss.on('connection', (ws, request, wsMap) => {
           }),
         );
       }
-      case 'SHOW_INVITE': {
+      case 'INVITE_DECLINED': {
         const opponentId = wsMap[payload];
         opponentId.ws.send(
           JSON.stringify({
-            type: 'ACCEPT_INVITE',
+            type: 'INVITE_DECLINED',
             payload: opponentId,
           }),
         );
@@ -54,26 +54,29 @@ wss.on('connection', (ws, request, wsMap) => {
         secondPlayer.opponent = firstPlayer;
         firstPlayer.room = firstPlayer.id;
         secondPlayer.room = firstPlayer.id;
+        const gameData = { firstPlayer, secondPlayer, board: {} };
         firstPlayer.ws.send(
           JSON.stringify({
             type: 'GAME_INIT',
+            payload: gameData,
+          }),
+        );
+        secondPlayer.ws.send(
+          JSON.stringify({
+            type: 'GAME_INIT',
+            payload: gameData,
           }),
         );
       }
-      case 'GAME_INIT': {
-        const { brd, id1, id2 } = { ...wsMap[payload] };
-        id1.board = brd;
-        id2.board = brd;
-        id1.ws.send(
+      case 'MOVE_MADE': {
+        const playerMoved = wsMap[payload.playerId];
+        const otherPlayer = playerMoved.opponent;
+        // id1.board = brd;
+        // id2.board = brd;
+        otherPlayer.ws.send(
           JSON.stringify({
-            type: 'MOVE_MADE',
-            payload: brd,
-          }),
-        );
-        id2.ws.send(
-          JSON.stringify({
-            type: 'MOVE_MADE',
-            payload: brd,
+            type: 'MAKE_MOVE',
+            payload,
           }),
         );
       }
