@@ -7,19 +7,19 @@ import ImageIcon from '@mui/icons-material/Image';
 import { setPlayersListAsync } from '../../redux/actions/playersActions';
 
 export default function OnlinePlayersPage() {
-  const user = useSelector((state) => state.authUser);
-  const { friendsOnline = [] } = useSelector((state) => state.players);
+  const { friendsList, friendsOnline } = useSelector((state) => state.players);
   const dispatch = useDispatch();
+  console.log(friendsList);
   console.log(friendsOnline);
 
   useEffect(() => {
-    dispatch(setPlayersListAsync(user.id));
+    dispatch(setPlayersListAsync());
   }, []);
 
   return (
     <>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {friendsOnline?.map((el) => (
+        {friendsList?.map((el) => (
           <ListItem key={el?.id}>
             <ListItemAvatar>
               <Avatar>
