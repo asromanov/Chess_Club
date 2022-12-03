@@ -12,7 +12,7 @@ import ProtectedRoute from './components/hoc/ProtectedRoute';
 import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
 import { socketInit } from './redux/actions/wsActions';
-import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
+// import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
@@ -40,7 +40,7 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/onlineuser" element={<OnlinePlayersPage />} />
+        {/* <Route path="/onlineuser" element={<OnlinePlayersPage />} /> */}
       </Routes>
     </Container>
   );

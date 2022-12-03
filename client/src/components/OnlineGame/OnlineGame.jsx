@@ -2,15 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
-import Timer from '@amplication/react-compound-timer';
-import { useDispatch } from 'react-redux';
-import { setMove } from '../../redux/actions/gameActions';
+// import { useDispatch } from 'react-redux';
+// import { setMove } from '../../redux/actions/gameActions';
 
 export default function GamePage() {
   const [fen, setFen] = useState('start');
   const [gameOver, setGameOver] = useState();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const game = useRef(null);
 
@@ -27,6 +26,8 @@ export default function GamePage() {
         info1: 'Мат, ',
         info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
       });
+      setWhiteTime(300);
+      setBlackTime(300);
     }
     if (game.current.isDraw()) {
       setGameOver({
@@ -79,10 +80,10 @@ export default function GamePage() {
     console.log(sourceSquare, targetSquare, piece);
     // если легальный, устанавливаем новую позиуцию
 
-    dispatch({ type: 'MAKE_MOVE', payload: nextMove });
+    // dispatch({ type: 'MAKE_MOVE', payload: nextMove });
 
     setFen(game.current.fen());
-    dispatch(setMove(fen));
+    // dispatch(setMove(fen));
   };
 
   const resetGame = () => {
@@ -90,6 +91,8 @@ export default function GamePage() {
     game.current.reset();
     setGameOver();
     setFen('start');
+    setWhiteTime(300);
+    setBlackTime(300);
   };
 
   const undoHandler = () => {
@@ -104,57 +107,82 @@ export default function GamePage() {
     return game?.current?.turn() === 'w' ? 'Ход белых' : 'Ход черных';
   };
 
+  // timer
+  const [blackTime, setBlackTime] = useState(300);
+  const [whiteTime, setWhiteTime] = useState(300);
+  const timer = useRef(null);
+
+  function decrementBlackTimer() {
+    setBlackTime((prev) => prev - 1);
+  }
+  function decrementWhiteTimer() {
+    setWhiteTime((prev) => prev - 1);
+  }
+
+  function startTimer() {
+    if (timer.current) {
+      clearInterval(timer.current);
+    }
+    const callback = game?.current?.turn() === 'w' ? decrementWhiteTimer : decrementBlackTimer;
+    timer.current = setInterval(callback, 1000);
+  }
+  useEffect(() => {
+    startTimer();
+  }, [fen]);
+
+  const restartHandler = () => {
+    setWhiteTime(300);
+    setBlackTime(300);
+    startTimer();
+  };
+
+  //
+
   return (
-    <div style={{
-      display: 'flex', marginTop: '50px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
-    }}
-    >
-      {gameOver ? (
-        <h1>
-          {gameOver.info1}
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{
+        display: 'flex', marginTop: '50px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
+      }}
+      >
+        {gameOver ? (
+          <h1>
+            {gameOver.info1}
+            {' '}
+            {gameOver.info2}
+            <CardActions>
+              <Button size="big" onClick={resetGame}>Play Again</Button>
+            </CardActions>
+          </h1>
+        ) : <h2>{whoMoves()}</h2>}
+        <h2>
+          Черные -
           {' '}
-          {gameOver.info2}
-          <CardActions>
-            <Button size="big" onClick={resetGame}>Play Again</Button>
-          </CardActions>
-        </h1>
-      ) : <h2>{whoMoves()}</h2>}
-      <Timer initialTime={3 * 60 * 1000} direction="backward" startImmediately={false}>
-        {() => (
-          <>
-            <div style={{ display: 'flex' }}>
-              <strong>black - </strong>
-              <Timer.Minutes />
-              <span> : </span>
-              <Timer.Seconds />
-            </div>
-            {/* <button onClick={start}>Start</button>
-            <button onClick={stop}>Stop</button> */}
-          </>
-        )}
-      </Timer>
-      <Chessboard
-        position={fen}
-        onDrop={onDrop}
-        boardStyle={{
-          borderRadius: '5px',
-          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
-        }}
-      />
-      <Timer initialTime={3 * 60 * 1000} direction="backward" startImmediately={false}>
-        {() => (
-          <div style={{ display: 'flex' }}>
-            <strong>white - </strong>
-            <Timer.Minutes />
-            <span> : </span>
-            <Timer.Seconds />
-          </div>
-        )}
-      </Timer>
-      <CardActions>
-        <Button size="big" onClick={() => undoHandler()}>Undo</Button>
-      </CardActions>
-      <h2>{game?.current?.pgn()}</h2>
+          {blackTime}
+        </h2>
+        <Chessboard
+          position={fen}
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: '5px',
+            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+          }}
+        />
+        <h2>
+          Белые -
+          {' '}
+          {whiteTime}
+        </h2>
+        <CardActions>
+          <Button size="big" onClick={() => restartHandler()}>Reset</Button>
+        </CardActions>
+        <CardActions>
+          <Button size="big" onClick={() => undoHandler()}>Undo</Button>
+        </CardActions>
+        {/* <h2>{game?.current?.pgn()}</h2> */}
+      </div>
+      <div style={{ margin: '50px', maxWidth: '250px' }}>
+        <h2>{game?.current?.pgn()}</h2>
+      </div>
     </div>
   );
 }
