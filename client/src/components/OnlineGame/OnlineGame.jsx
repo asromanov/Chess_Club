@@ -3,10 +3,14 @@ import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import Timer from '@amplication/react-compound-timer';
+import { useDispatch } from 'react-redux';
+import { setMove } from '../../redux/actions/gameActions';
 
 export default function GamePage() {
   const [fen, setFen] = useState('start');
   const [gameOver, setGameOver] = useState();
+
+  const dispatch = useDispatch();
 
   const game = useRef(null);
 
@@ -51,6 +55,7 @@ export default function GamePage() {
   }, [fen]);
 
   console.log(game);
+  console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
     const promotions = game.current.moves({ verbose: true }).filter((m) => m.promotion);
@@ -63,16 +68,21 @@ export default function GamePage() {
       }
     }
 
-    const move = game.current.move({
+    const nextMove = {
       from: sourceSquare,
       to: targetSquare,
       promotion: promotionTo,
-    });
+    };
+
+    const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
     console.log(sourceSquare, targetSquare, piece);
     // если легальный, устанавливаем новую позиуцию
 
+    dispatch({ type: 'MAKE_MOVE', payload: nextMove });
+
     setFen(game.current.fen());
+    dispatch(setMove(fen));
   };
 
   const resetGame = () => {
