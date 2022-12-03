@@ -40,7 +40,7 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
         <Route path="/game" element={<GamePage />} />
-        {/* <Route path="/onlineuser" element={<OnlinePlayersPage />} /> */}
+        <Route path="/onlineuser" element={<OnlinePlayersPage />} />
       </Routes>
     </Container>
   );

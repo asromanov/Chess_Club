@@ -62,7 +62,6 @@ function* gameOver(socket) {
   socket.send(JSON.stringify(message));
 }
 function* closeConnection(socket) {
-
   socket.close();
   yield put({ type: SET_WS, payload: null });
 }
