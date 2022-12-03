@@ -34,6 +34,7 @@ export default function OnlinePlayersPage() {
       <Button>Принять</Button>
       <Button>Отклонить</Button>
       {/* {users.includes(user.id)
+      {users.includes(user?.id)
         ? <Button>Пригласить</Button>
         : (
           <>
