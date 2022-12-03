@@ -23,7 +23,7 @@ export default function OnlinePlayersPage() {
           </ListItem>
         ))}
       </List>
-      {users.includes(user.id)
+      {users.includes(user?.id)
         ? <Button>Пригласить</Button>
         : (
           <>
