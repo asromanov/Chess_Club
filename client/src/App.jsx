@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Container } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from './components/Main/Main';
 import NavBar from './components/NavBar/NavBar';
@@ -29,7 +28,7 @@ export default function App() {
     }
   }, [authUser?.id]);
   return (
-    <Container maxWidth="lg">
+    <>
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -42,6 +41,6 @@ export default function App() {
         <Route path="/game" element={<GamePage />} />
         <Route path="/onlineuser" element={<OnlinePlayersPage />} />
       </Routes>
-    </Container>
+    </>
   );
 }

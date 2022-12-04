@@ -29,7 +29,7 @@ export default function NavBar() {
       >
         <Toolbar>
           <Box mr={5}>
-            <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px' }} />
+            <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px', paddingTop: '.2rem' }} />
           </Box>
           <Box mr={5}>
             <NavLink to="/" style={linkStyle}>Main</NavLink>

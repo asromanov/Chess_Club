@@ -4,7 +4,7 @@ import './main.css';
 
 export default function Main() {
   const chessBoardLocation = {
-    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '100px',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px',
 
   };
   return (

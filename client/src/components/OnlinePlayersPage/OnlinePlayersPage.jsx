@@ -18,7 +18,7 @@ export default function OnlinePlayersPage() {
 
   return (
     <>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <List style={{ margin: '50px', backgroundColor: 'inherit' }} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {friendsList?.map((el) => (
           <ListItem key={el?.id}>
             <ListItemAvatar>
