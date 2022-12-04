@@ -73,7 +73,6 @@ function* playersListWorker(action) {
   yield fork(closeConnection, socket);
   yield fork(moveGame, socket);
   yield fork(sendInvite, socket);
-
   yield fork(acceptInvite, socket);
   yield fork(gameOver, socket);
 
