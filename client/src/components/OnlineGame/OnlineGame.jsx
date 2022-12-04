@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
-import { EvalBar } from 'chess-evaluation-bar';
-// import {EvalBar} from 'chess-evaluation-bar';
+import './onlineGame.css';
 // import { useDispatch } from 'react-redux';
 // import { setMove } from '../../redux/actions/gameActions';
 
@@ -104,9 +103,9 @@ export default function GamePage() {
 
   const whoMoves = () => {
     if (fen === 'start') {
-      return 'Ход белых';
+      return '⚪';
     }
-    return game?.current?.turn() === 'w' ? 'Ход белых' : 'Ход черных';
+    return game?.current?.turn() === 'w' ? '⚪' : '⚫';
   };
 
   // timer
@@ -139,53 +138,69 @@ export default function GamePage() {
   };
 
   //
+  const chessBoardLocation = {
+    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
 
+  };
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <div style={{
-        display: 'flex', marginTop: '50px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
-      }}
-      >
+    <>
+      <div className="whoMoves">
         {gameOver ? (
-          <h1>
+          <h1 className="">
             {gameOver.info1}
             {' '}
             {gameOver.info2}
             <CardActions>
-              <Button size="big" onClick={resetGame}>Play Again</Button>
+              <Button size="big" style={{ margin: 'auto' }} onClick={resetGame}>Play Again</Button>
             </CardActions>
           </h1>
-        ) : <h2>{whoMoves()}</h2>}
-        <h2>
-          Черные -
-          {' '}
-          {blackTime}
-        </h2>
+        ) : <div />}
+      </div>
 
-        <Chessboard
-          position={fen}
-          onDrop={onDrop}
-          boardStyle={{
-            borderRadius: '5px',
-            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
-          }}
-        />
-        <h2>
-          Белые -
-          {' '}
-          {whiteTime}
-        </h2>
-        <CardActions>
-          <Button size="big" onClick={() => restartHandler()}>Reset</Button>
-        </CardActions>
-        <CardActions>
-          <Button size="big" onClick={() => undoHandler()}>Undo</Button>
-        </CardActions>
-        {/* <h2>{game?.current?.pgn()}</h2> */}
+      <div className="MainContainer">
+        <div style={chessBoardLocation}>
+          <div className="ChessBox">
+            <h2 className="blackTime">
+              ⌛
+              {' '}
+              {blackTime}
+              {' '}
+              {whoMoves() === '⚫' ? '⚫' : ''}
+            </h2>
+            <Chessboard
+              position={fen}
+              onDrop={onDrop}
+              boardStyle={{
+                borderRadius: '5px',
+                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+              }}
+            />
+            <h2 className="whiteTime">
+              ⌛
+              {' '}
+              {whiteTime}
+              {' '}
+              {whoMoves() === '⚪' ? '⚪' : ''}
+            </h2>
+          </div>
+          <div>
+            {/* <h2>{game?.current?.pgn()}</h2> */}
+            <div className="PgnContainer">
+              <h2>
+                {game?.current?.pgn()}
+              </h2>
+            </div>
+            <div className="btns-box">
+              <CardActions>
+                <Button size="big" onClick={() => restartHandler()}>Reset</Button>
+              </CardActions>
+              <CardActions>
+                <Button size="big" onClick={() => undoHandler()}>Undo</Button>
+              </CardActions>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style={{ margin: '50px', maxWidth: '250px' }}>
-        <h2>{game?.current?.pgn()}</h2>
-      </div>
-    </div>
+    </>
   );
 }
