@@ -41,7 +41,7 @@ function createSocketChannel(socket, action) {
 }
 
 function createWebSocketConnection() {
-  const newSocket = new WebSocket(process.env.REACT_APP_WSURL);
+  const newSocket = new WebSocket('ws://localhost:3001');
   console.log('Created WS:', newSocket);
   return newSocket;
 }
