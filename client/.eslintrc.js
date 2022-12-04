@@ -28,5 +28,7 @@ module.exports = {
     'no-prompt': 0,
     'no-alert': 0,
     'no-param-reassign': 0,
+    'no-use-before-define': 0,
+    'no-dupe-keys': 0,
   },
 };
