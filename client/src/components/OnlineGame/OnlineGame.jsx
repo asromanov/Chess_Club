@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
+import { EvalBar } from 'chess-evaluation-bar';
+// import {EvalBar} from 'chess-evaluation-bar';
 // import { useDispatch } from 'react-redux';
 // import { setMove } from '../../redux/actions/gameActions';
 
@@ -55,7 +57,7 @@ export default function GamePage() {
     }
   }, [fen]);
 
-  console.log(game);
+  console.log({ ...game.current });
   console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
@@ -77,7 +79,7 @@ export default function GamePage() {
 
     const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
-    console.log(sourceSquare, targetSquare, piece);
+    // console.log(sourceSquare, targetSquare, piece);
     // если легальный, устанавливаем новую позиуцию
 
     // dispatch({ type: 'MAKE_MOVE', payload: nextMove });
@@ -159,6 +161,7 @@ export default function GamePage() {
           {' '}
           {blackTime}
         </h2>
+
         <Chessboard
           position={fen}
           onDrop={onDrop}
