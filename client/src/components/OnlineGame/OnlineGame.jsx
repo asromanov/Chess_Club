@@ -3,14 +3,20 @@ import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import './onlineGame.css';
-// import { useDispatch } from 'react-redux';
-// import { setMove } from '../../redux/actions/gameActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFen } from '../../redux/actions/fenActions';
+import { setMoves } from '../../redux/actions/moveActions';
 
 export default function GamePage() {
-  const [fen, setFen] = useState('start');
+  // const [fen, setFen] = useState('start');
+
+  const fen = useSelector((store) => store.fen);
+  const nextMoves = useSelector((store) => store.move);
+  console.log(nextMoves);
+
   const [gameOver, setGameOver] = useState();
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const game = useRef(null);
 
@@ -56,7 +62,7 @@ export default function GamePage() {
     }
   }, [fen]);
 
-  console.log(game);
+  // console.log({ ...game.current });
   console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
@@ -74,31 +80,31 @@ export default function GamePage() {
       from: sourceSquare,
       to: targetSquare,
       promotion: promotionTo,
+      piece,
     };
 
     const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
-    console.log(sourceSquare, targetSquare, piece);
+    // console.log(sourceSquare, targetSquare, piece);
     // если легальный, устанавливаем новую позиуцию
 
-    // dispatch({ type: 'MAKE_MOVE', payload: nextMove });
+    dispatch(setMoves(nextMove));
 
-    setFen(game.current.fen());
-    // dispatch(setMove(fen));
+    dispatch(setFen(game.current.fen()));
   };
 
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
     setGameOver();
-    setFen('start');
+    dispatch(setFen('start'));
     setWhiteTime(300);
     setBlackTime(300);
   };
 
   const undoHandler = () => {
     game.current.undo();
-    setFen(game.current.fen());
+    dispatch(setFen(game.current.fen()));
   };
 
   const whoMoves = () => {
