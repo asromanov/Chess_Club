@@ -18,8 +18,19 @@ export default function NavBar() {
   const dispatch = useDispatch();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        id="NavBar"
+        position="static"
+        sx={{
+          background: '-webkit-linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
+          background: '-moz-linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
+          background: 'linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
+        }}
+      >
         <Toolbar>
+          <Box mr={5}>
+            <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px' }} />
+          </Box>
           <Box mr={5}>
             <NavLink to="/" style={linkStyle}>Main</NavLink>
           </Box>
