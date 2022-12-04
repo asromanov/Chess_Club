@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { LOGOUT, SET_AUTH } from '../types';
+import { LOGOUT, SET_AUTH, SET_AUTH_EMPTY } from '../types';
 import { setAuthPages, setPublicPages } from './pagesActions';
 
 // Action creators
 export const authLogout = () => ({ type: LOGOUT });
 export const setAuth = (payload) => ({ type: SET_AUTH, payload });
+export const setAuthEmpty = () => ({ type: SET_AUTH_EMPTY, payload: {} });
 
 // Async Thunk actions
 export const checkAuthAsync = () => async (dispatch) => {
@@ -13,7 +14,7 @@ export const checkAuthAsync = () => async (dispatch) => {
     dispatch(setAuth(res.data));
     dispatch(setAuthPages());
   } catch (e) {
-    dispatch(setAuth({}));
+    dispatch(setAuthEmpty());
     dispatch(setPublicPages());
     if (e.response.status === 401) {
       console.log('No session saved!');
@@ -31,7 +32,7 @@ export const loginUserAsync = (data, setLoading) => async (dispatch) => {
     dispatch(setAuthPages());
   } catch (e) {
     setLoading(false);
-    dispatch(setAuth({}));
+    dispatch(setAuthEmpty());
     dispatch(setPublicPages());
     console.log('Auth failed:', e);
   }
@@ -42,9 +43,8 @@ export const logoutUserAsync = () => async (dispatch) => {
     await axios('/api/auth/logout');
     dispatch(authLogout());
     dispatch(setPublicPages());
-    dispatch({ type: 'CLOSE_WEBSOCKET' });
   } catch (e) {
-    dispatch(setAuth({}));
+    dispatch(setAuthEmpty());
     dispatch(setPublicPages());
     console.log('Auth failed:', e);
   }
@@ -58,7 +58,7 @@ export const signupUserAsync = (data, setLoading) => async (dispatch) => {
     dispatch(setAuthPages());
   } catch (e) {
     setLoading(false);
-    dispatch(setAuth({}));
+    dispatch(setAuthEmpty());
     dispatch(setPublicPages());
     console.log('Auth failed:', e);
   }

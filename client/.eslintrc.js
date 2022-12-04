@@ -30,5 +30,6 @@ module.exports = {
     'no-param-reassign': 0,
     'no-use-before-define': 0,
     'no-dupe-keys': 0,
+    'func-names': 0,
   },
 };
