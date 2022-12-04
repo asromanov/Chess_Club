@@ -40,7 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRouter);
-app.use('/api/users', friendsRouter);
+app.use('/api/friends', friendsRouter);
 
 const server = http.createServer(app);
 

@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'no-restricted-syntax': 0,
     'no-fallthrough': 0,
+    'no-console': 0,
   },
 };

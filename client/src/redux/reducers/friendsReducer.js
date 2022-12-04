@@ -1,14 +1,14 @@
-import { SET_ONLINE_PLAYERS, SET_PLAYERS_LIST } from '../types';
+import { SET_FRIENDS_LIST, SET_ONLINE_FRIENDS } from '../types';
 
-const playersReducer = (
+const friendsReducer = (
   state = { friendsList: [], friendsOnline: [] },
   action,
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case SET_PLAYERS_LIST:
+    case SET_FRIENDS_LIST:
       return { ...state, friendsList: payload };
-    case SET_ONLINE_PLAYERS: {
+    case SET_ONLINE_FRIENDS: {
       const friendsList = JSON.parse(JSON.stringify(state.friendsList));
       // eslint-disable-next-line no-restricted-syntax
       for (const friend of payload) {
@@ -22,4 +22,4 @@ const playersReducer = (
   }
 };
 
-export default playersReducer;
+export default friendsReducer;

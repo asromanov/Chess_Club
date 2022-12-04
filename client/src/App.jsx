@@ -18,15 +18,15 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Проверка авторизации
-    dispatch(checkAuthAsync());
-  }, []);
-
-  useEffect(() => {
     if (authUser?.id) {
       dispatch(socketInit());
     }
-  }, [authUser?.id]);
+  }, [authUser]);
+
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -39,7 +39,7 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/onlineuser" element={<OnlinePlayersPage />} />
+        <Route path="/friends" element={<OnlinePlayersPage />} />
       </Routes>
     </>
   );

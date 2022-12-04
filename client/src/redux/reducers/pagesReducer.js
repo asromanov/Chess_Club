@@ -7,7 +7,7 @@ const publicPages = [
 ];
 const authPages = [
   { title: 'Home', link: '/' },
-  { title: 'Players', link: '/players' },
+  { title: 'Friends', link: '/friends' },
 ];
 
 export default function pagesReducer(state = publicPages, action) {
