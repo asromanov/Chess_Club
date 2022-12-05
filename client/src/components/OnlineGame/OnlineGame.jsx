@@ -2,16 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { moveGame } from '../../redux/sagasFunctions/gameFunctions';
+import { setStartGame } from '../../redux/actions/gameActions';
 // import { Button, CardActions } from '@mui/material';
 
 export default function GamePage() {
   const [fen, setFen] = useState('start');
   const [gameOver, setGameOver] = useState();
+  const dispatch = useDispatch();
 
   const game = useRef(null);
 
   useEffect(() => {
     game.current = new Chess();
+    dispatch(setStartGame(game.current));
   }, []);
 
   useEffect(() => {
@@ -73,8 +78,8 @@ export default function GamePage() {
     // если легальный, устанавливаем новую позиуцию
 
     setFen(game.current.fen());
+    dispatch(moveGame(move));
   };
-
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
@@ -86,6 +91,10 @@ export default function GamePage() {
     game.current.undo();
     setFen(game.current.fen());
   };
+
+  useEffect(() => {
+    game.current.move(onlinegame.moveMade);
+  }, [onlinegame.moveMade]);
 
   return (
     <div style={{

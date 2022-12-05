@@ -27,6 +27,12 @@ export default function App() {
       dispatch(socketInit());
     }
   }, [authUser?.id]);
+
+  useEffect(() => {
+    if (game.isActive) {
+      navigate('/onlinegame');
+    }
+  }, [game.isActive]);
   return (
     <Container maxWidth="lg">
       <NavBar />

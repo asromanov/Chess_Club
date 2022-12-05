@@ -10,7 +10,7 @@ const gameReducer = (
   const { type, payload } = action;
   switch (type) {
     case GAME_INIT:
-      return { ...payload, board: {} };
+      return payload;
     case MOVE_MADE:
       return payload;
     case SEND_INVITE:
