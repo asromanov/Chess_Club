@@ -138,6 +138,9 @@ export default function GamePage() {
   }, [fen]);
 
   const restartHandler = () => {
+    game.current.clear();
+    game.current.reset();
+    dispatch(setFen('start'));
     setWhiteTime(300);
     setBlackTime(300);
     startTimer();
