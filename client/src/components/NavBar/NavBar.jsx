@@ -3,12 +3,13 @@ import {
   AppBar, Box, Button, Toolbar,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '@fontsource/roboto/500.css';
 import { logoutUserAsync } from '../../redux/actions/authActions';
 import { userLoggedOut } from '../../redux/actions/friendsActions';
 
 const linkStyle = {
+  textTransform: 'none',
   textDecoration: 'none',
   color: 'white',
   fontFamily: 'Roboto',
@@ -16,10 +17,11 @@ const linkStyle = {
 };
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} style={linkStyle}>
       <AppBar
         id="NavBar"
         position="static"
@@ -51,7 +53,7 @@ export default function NavBar() {
                 <Button
                   style={linkStyle}
                   key="logout"
-                  onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); }}
+                  onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); navigate('/'); }}
                 >
                   Logout
                 </Button>
