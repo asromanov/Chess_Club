@@ -1,28 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  List, ListItem, ListItemText, ListItemAvatar, Avatar, Button,
+  List, ListItem, ListItemText, ListItemAvatar, Button,
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-// import { useSelector } from 'react-redux';
+import { setFriendsListAsync } from '../../redux/actions/friendsActions';
+import BadgeAvatar from './BadgeAvatar';
 
 export default function OnlinePlayersPage() {
-  // const users = useSelector((state) => state.players.friendsOnline);
-  const users = [{ name: 'user1' }, { name: 'user2' }, { name: 'user' }];
-  console.log(users);
+  const { friendsList = [], friendsOnline = [] } = useSelector((state) => state.friends);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFriendsListAsync());
+  }, []);
+
   return (
     <>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {users?.map((el) => (
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <ImageIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={`${el?.name}`} />
-          </ListItem>
-        ))}
+      <List style={{ margin: '50px', backgroundColor: 'inherit' }} sx={{ width: '100%' }}>
+        {friendsList?.map((friend) => {
+          const isOnline = friendsOnline?.map((el) => el.id).includes(friend.id);
+          return (
+            <ListItem key={friend?.id}>
+              <ListItemAvatar>
+                <BadgeAvatar alt={`${friend.name}`} src="" isOnline={isOnline}>
+                  <ImageIcon />
+                </BadgeAvatar>
+              </ListItemAvatar>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                <ListItemText primary={`${friend?.name}`} />
+                <Button>Пригласить</Button>
+                <Button color="success">Принять</Button>
+                <Button color="error">Отклонить</Button>
+              </div>
+            </ListItem>
+          );
+        })}
       </List>
+
+      {/* {users.includes(user.id)
       {users.includes(user?.id)
         ? <Button>Пригласить</Button>
         : (
@@ -30,7 +46,7 @@ export default function OnlinePlayersPage() {
             <Button>Принять</Button>
             <Button>Отклонить</Button>
           </>
-        )}
+        )} */}
     </>
   );
 }

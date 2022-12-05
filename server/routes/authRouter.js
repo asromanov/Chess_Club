@@ -50,10 +50,12 @@ authRouter.post('/login', async (req, res) => {
 });
 
 authRouter.post('/check', (req, res) => {
-  if (req.session?.user) {
-    return res.json(req.session?.user);
-  }
-  return res.sendStatus(401);
+  setTimeout(() => {
+    if (req.session?.user) {
+      return res.json(req.session?.user);
+    }
+    return res.sendStatus(401);
+  }, 1000);
 });
 
 authRouter.get('/logout', (req, res) => {

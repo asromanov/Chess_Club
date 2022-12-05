@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import '@fontsource/roboto/500.css';
 import { logoutUserAsync } from '../../redux/actions/authActions';
+import { userLoggedOut } from '../../redux/actions/friendsActions';
 
 const linkStyle = {
   textDecoration: 'none',
@@ -29,7 +30,7 @@ export default function NavBar() {
       >
         <Toolbar>
           <Box mr={5}>
-            <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px' }} />
+            <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px', paddingTop: '.2rem' }} />
           </Box>
           <Box mr={5}>
             <NavLink to="/" style={linkStyle}>Main</NavLink>
@@ -44,7 +45,7 @@ export default function NavBar() {
             <Button
               style={linkStyle}
               key="logout"
-              onClick={() => dispatch(logoutUserAsync())}
+              onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); }}
             >
               Logout
             </Button>
@@ -56,7 +57,7 @@ export default function NavBar() {
             <NavLink to="/game" style={linkStyle}>Game</NavLink>
           </Box>
           <Box ml={5}>
-            <NavLink to="/onlineuser" style={linkStyle}>Online Players</NavLink>
+            <NavLink to="/friends" style={linkStyle}>Online Players</NavLink>
           </Box>
         </Toolbar>
       </AppBar>

@@ -6,6 +6,7 @@ const cors = require('cors');
 const http = require('http');
 const wss = require('./webSocket');
 const authRouter = require('./routes/authRouter');
+const friendsRouter = require('./routes/friendsRouter');
 
 require('dotenv').config();
 
@@ -39,7 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRouter);
-// app.use('/api/friends', friendsRouter);
+app.use('/api/friends', friendsRouter);
 
 const server = http.createServer(app);
 
