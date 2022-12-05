@@ -4,8 +4,6 @@ import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 // import { moveGame } from '../../redux/sagas/friendsWatcherSaga';
-import { setStartGame } from '../../redux/actions/gameActions';
-// import { Button, CardActions } from '@mui/material';
 import './onlineGame.css';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
@@ -15,21 +13,25 @@ export default function GamePage() {
 
   const fen = useSelector((store) => store.fen);
   const nextMoves = useSelector((store) => store.move);
-  console.log(nextMoves);
+  // console.log(nextMoves);
 
   const [gameOver, setGameOver] = useState();
+  const [showCheck, setShowCheck] = useState(false);
+
   const dispatch = useDispatch();
 
   const game = useRef(null);
 
   useEffect(() => {
     game.current = new Chess();
-    dispatch(setStartGame(game.current));
   }, []);
 
   useEffect(() => {
     if ((game.current.inCheck()) && !(game.current.isCheckmate())) {
-      alert('Шах!');
+      setShowCheck((prev) => !prev);
+    }
+    if (!(game.current.inCheck())) {
+      setShowCheck(false);
     }
     if (game.current.isCheckmate()) {
       setGameOver({
@@ -88,7 +90,7 @@ export default function GamePage() {
 
     const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
-    // console.log(sourceSquare, targetSquare, piece);
+    console.log(nextMoves);
     // если легальный, устанавливаем новую позиуцию
 
     setFen(game.current.fen());
@@ -103,18 +105,13 @@ export default function GamePage() {
     game.current.reset();
     setGameOver();
     dispatch(setFen('start'));
-    setWhiteTime(300);
-    setBlackTime(300);
+    setTime();
   };
 
   const undoHandler = () => {
     game.current.undo();
     dispatch(setFen(game.current.fen()));
   };
-
-  // useEffect(() => {
-  //   game.current.move(onlinegame.moveMade);
-  // }, [onlinegame.moveMade]);
 
   const whoMoves = () => {
     if (fen === 'start') {
@@ -128,11 +125,36 @@ export default function GamePage() {
   const [whiteTime, setWhiteTime] = useState(300);
   const timer = useRef(null);
 
+  function setTime() {
+    setWhiteTime(300);
+    setBlackTime(300);
+  }
+
   function decrementBlackTimer() {
-    setBlackTime((prev) => prev - 1);
+    setBlackTime((prev) => {
+      if (prev === 0) {
+        setGameOver({
+          info1: 'Закончилось время, ',
+          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
+        });
+        return 300;
+      }
+      // console.log(prev);
+      return prev - 1;
+    });
   }
   function decrementWhiteTimer() {
-    setWhiteTime((prev) => prev - 1);
+    setWhiteTime((prev) => {
+      if (prev === 0) {
+        setGameOver({
+          info1: 'Закончилось время, ',
+          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
+        });
+        return 300;
+      }
+      // console.log(prev);
+      return prev - 1;
+    });
   }
 
   function startTimer() {
@@ -150,9 +172,7 @@ export default function GamePage() {
     game.current.clear();
     game.current.reset();
     dispatch(setFen('start'));
-    setWhiteTime(300);
-    setBlackTime(300);
-    startTimer();
+    setTime();
   };
 
   const chessBoardLocation = {
@@ -172,6 +192,11 @@ export default function GamePage() {
             </CardActions>
           </h1>
         ) : <div />}
+        {showCheck && (
+        <h1>
+          Шах!
+        </h1>
+        )}
       </div>
 
       <div className="MainContainer">
@@ -180,7 +205,11 @@ export default function GamePage() {
             <h2 className="blackTime">
               ⌛
               {' '}
-              {blackTime}
+              {Math.floor(blackTime / 60)}
+              {' '}
+              :
+              {' '}
+              {Math.floor(blackTime % 60) < 10 ? `0${Math.floor(blackTime % 60)}` : Math.floor(blackTime % 60)}
               {' '}
               {whoMoves() === '⚫' ? '⚫' : ''}
             </h2>
@@ -195,7 +224,11 @@ export default function GamePage() {
             <h2 className="whiteTime">
               ⌛
               {' '}
-              {whiteTime}
+              {Math.floor(whiteTime / 60)}
+              {' '}
+              :
+              {' '}
+              {Math.floor(whiteTime % 60) < 10 ? `0${Math.floor(whiteTime % 60)}` : Math.floor(whiteTime % 60)}
               {' '}
               {whoMoves() === '⚪' ? '⚪' : ''}
             </h2>
@@ -203,16 +236,16 @@ export default function GamePage() {
           <div>
             {/* <h2>{game?.current?.pgn()}</h2> */}
             <div className="PgnContainer">
-              <h2>
+              <h2 style={{ fontWeight: 'normal' }}>
                 {game?.current?.pgn()}
               </h2>
             </div>
             <div className="btns-box">
               <CardActions>
-                <Button size="big" onClick={() => restartHandler()}>Reset</Button>
+                <Button style={{ color: 'black' }} size="big" onClick={() => restartHandler()}>Reset</Button>
               </CardActions>
               <CardActions>
-                <Button size="big" onClick={() => undoHandler()}>Undo</Button>
+                <Button style={{ color: 'black' }} size="big" onClick={() => undoHandler()}>Undo</Button>
               </CardActions>
             </div>
           </div>

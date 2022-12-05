@@ -1,15 +1,18 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
+
 .MainContainer {
     width: 80%;
     margin-left: 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    font-family: "Roboto";
 }
 
 .PgnContainer {
     background-color: rgba(230, 230, 230, 0.596);
     height: 13em;
-    width: 15em;
+    width: 13em;
     overflow-y: scroll;
     margin: 0 0 0 15%;
     border-radius: 5px;
@@ -17,11 +20,13 @@
 
 .PgnContainer::-webkit-scrollbar {
     width: 0;
-  }
-  
+    font-weight: normal;
+}
+
 .whoMoves {
     display: block;
     text-align: center;
+    font-family: "Roboto";
 }
 
 .blackTime {
@@ -35,12 +40,13 @@
 }
 
 .ChessBox {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: center;
     /* margin-left: -10%; */
-    
+
 }
+
 .btns-box {
     display: flex;
     margin: 0 0 0 31%;
