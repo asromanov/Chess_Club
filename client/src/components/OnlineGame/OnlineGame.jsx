@@ -3,7 +3,9 @@ import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import './onlineGame.css';
+// import '@fontsource/roboto/300.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { fontWeight } from '@mui/system';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
 
@@ -15,6 +17,7 @@ export default function GamePage() {
   console.log(nextMoves);
 
   const [gameOver, setGameOver] = useState();
+  const [showCheck, setShowCheck] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -26,7 +29,14 @@ export default function GamePage() {
 
   useEffect(() => {
     if ((game.current.inCheck()) && !(game.current.isCheckmate())) {
-      alert('Шах!');
+      // setShowCheck((prev) => !prev);
+      setTimeout(setShowCheck((prev) => !prev), 1000);
+
+      // setShowCheck((prev) => !prev);
+      // alert('Шах!');
+    }
+    if (!(game.current.inCheck())) {
+      setShowCheck(false);
     }
     if (game.current.isCheckmate()) {
       setGameOver({
@@ -98,8 +108,7 @@ export default function GamePage() {
     game.current.reset();
     setGameOver();
     dispatch(setFen('start'));
-    setWhiteTime(300);
-    setBlackTime(300);
+    setTime();
   };
 
   const undoHandler = () => {
@@ -119,11 +128,36 @@ export default function GamePage() {
   const [whiteTime, setWhiteTime] = useState(300);
   const timer = useRef(null);
 
+  function setTime() {
+    setWhiteTime(300);
+    setBlackTime(300);
+  }
+
   function decrementBlackTimer() {
-    setBlackTime((prev) => prev - 1);
+    setBlackTime((prev) => {
+      if (prev === 0) {
+        setGameOver({
+          info1: 'Закончилось время, ',
+          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
+        });
+        return 300;
+      }
+      // console.log(prev);
+      return prev - 1;
+    });
   }
   function decrementWhiteTimer() {
-    setWhiteTime((prev) => prev - 1);
+    setWhiteTime((prev) => {
+      if (prev === 0) {
+        setGameOver({
+          info1: 'Закончилось время, ',
+          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
+        });
+        return 300;
+      }
+      // console.log(prev);
+      return prev - 1;
+    });
   }
 
   function startTimer() {
@@ -141,9 +175,7 @@ export default function GamePage() {
     game.current.clear();
     game.current.reset();
     dispatch(setFen('start'));
-    setWhiteTime(300);
-    setBlackTime(300);
-    startTimer();
+    setTime();
   };
 
   //
@@ -164,6 +196,12 @@ export default function GamePage() {
             </CardActions>
           </h1>
         ) : <div />}
+        {showCheck && (
+        <h1>
+          Шах!
+          {/* {() => setShowCheck((prev) => !prev)} */}
+        </h1>
+        )}
       </div>
 
       <div className="MainContainer">
@@ -195,7 +233,7 @@ export default function GamePage() {
           <div>
             {/* <h2>{game?.current?.pgn()}</h2> */}
             <div className="PgnContainer">
-              <h2>
+              <h2 style={{ fontWeight: 'normal' }}>
                 {game?.current?.pgn()}
               </h2>
             </div>
