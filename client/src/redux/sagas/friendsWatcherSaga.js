@@ -1,10 +1,10 @@
 import {
-  take, put, call, takeEvery, race,
+  take, put, call, takeEvery, race, fork,
 } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
 import {
   USER_LOGGED_OUT,
-  SET_WS, SOCKET_INIT,
+  SET_WS, SOCKET_INIT, MOVE_MADE,
 } from '../types';
 
 function createSocketChannel(socket, action) {
@@ -40,12 +40,41 @@ function createWebSocketConnection() {
   return new WebSocket(process.env.REACT_APP_WSURL);
 }
 
+function* moveGame(socket) {
+  while (true) {
+    const message = yield take(MOVE_MADE);
+    console.log(JSON.stringify(message), 'move game');
+    socket.send(JSON.stringify(message));
+  }
+}
+
+// function* sendInvite(socket) {
+//   const message = yield take(SEND_INVITE);
+//   socket.send(JSON.stringify(message));
+// }
+// function* acceptInvite(socket) {
+//   const message = yield take(ACCEPT_INVITE);
+//   socket.send(JSON.stringify(message));
+// }
+// function* gameOver(socket) {
+//   const message = yield take(GAME_OVER);
+//   socket.send(JSON.stringify(message));
+// }
+// function* closeConnection(socket) {
+//   const message = yield take('CLOSE_WEBSOCKET');
+//   console.log(message);
+//   // socket.send(JSON.stringify(message));
+//   socket.close();
+//   yield put({ type: SET_WS, payload: null });
+// }
+
 function* friendsListWorker(action) {
   const socket = yield call(createWebSocketConnection);
   const socketChannel = yield call(createSocketChannel, socket, action);
 
+  yield fork(moveGame, socket);
+
   // yield fork(closeConnection, socket);
-  // yield fork(moveGame, socket);
   // yield fork(sendInvite, socket);
   // yield fork(acceptInvite, socket);
   // yield fork(gameOver, socket);
