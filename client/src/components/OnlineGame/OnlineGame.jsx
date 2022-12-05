@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
-import './onlineGame.css';
 import { useDispatch, useSelector } from 'react-redux';
+// import { moveGame } from '../../redux/sagas/friendsWatcherSaga';
+import './onlineGame.css';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
 
@@ -94,6 +95,7 @@ export default function GamePage() {
     // если легальный, устанавливаем новую позиуцию
 
     setFen(game.current.fen());
+    // dispatch(moveGame(move));
 
     dispatch(setMoves(nextMove));
 
