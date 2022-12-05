@@ -1,6 +1,6 @@
 import {
   ACCEPT_INVITE,
-  GAME_INIT, MOVE_MADE, SEND_INVITE, SHOW_INVITE,
+  GAME_INIT, GAME_STATUS, MOVE_MADE, MOVE_STATUS, SEND_INVITE, SHOW_INVITE,
 } from '../types';
 
 const gameReducer = (
@@ -10,7 +10,7 @@ const gameReducer = (
   const { type, payload } = action;
   switch (type) {
     case GAME_INIT:
-      return { ...payload, board: {} };
+      return payload;
     case MOVE_MADE:
       return payload;
     case SEND_INVITE:
@@ -18,6 +18,10 @@ const gameReducer = (
     case SHOW_INVITE:
       return payload;
     case ACCEPT_INVITE:
+      return payload;
+    case MOVE_STATUS:
+      return payload;
+    case GAME_STATUS:
       return payload;
     default:
       return state;

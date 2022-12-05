@@ -3,9 +3,7 @@ import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import './onlineGame.css';
-// import '@fontsource/roboto/300.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { fontWeight } from '@mui/system';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
 
@@ -14,7 +12,7 @@ export default function GamePage() {
 
   const fen = useSelector((store) => store.fen);
   const nextMoves = useSelector((store) => store.move);
-  console.log(nextMoves);
+  // console.log(nextMoves);
 
   const [gameOver, setGameOver] = useState();
   const [showCheck, setShowCheck] = useState(false);
@@ -91,14 +89,15 @@ export default function GamePage() {
 
     const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
-    // console.log(sourceSquare, targetSquare, piece);
+    console.log(nextMoves);
     // если легальный, устанавливаем новую позиуцию
+
+    setFen(game.current.fen());
 
     dispatch(setMoves(nextMove));
 
     dispatch(setFen(game.current.fen()));
   };
-
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
@@ -174,7 +173,6 @@ export default function GamePage() {
     setTime();
   };
 
-  //
   const chessBoardLocation = {
     display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
 
@@ -195,7 +193,6 @@ export default function GamePage() {
         {showCheck && (
         <h1>
           Шах!
-          {/* {() => setShowCheck((prev) => !prev)} */}
         </h1>
         )}
       </div>
@@ -206,7 +203,11 @@ export default function GamePage() {
             <h2 className="blackTime">
               ⌛
               {' '}
-              {blackTime}
+              {Math.floor(blackTime / 60)}
+              {' '}
+              :
+              {' '}
+              {Math.floor(blackTime % 60) < 10 ? `0${Math.floor(blackTime % 60)}` : Math.floor(blackTime % 60)}
               {' '}
               {whoMoves() === '⚫' ? '⚫' : ''}
             </h2>
@@ -221,7 +222,11 @@ export default function GamePage() {
             <h2 className="whiteTime">
               ⌛
               {' '}
-              {whiteTime}
+              {Math.floor(whiteTime / 60)}
+              {' '}
+              :
+              {' '}
+              {Math.floor(whiteTime % 60) < 10 ? `0${Math.floor(whiteTime % 60)}` : Math.floor(whiteTime % 60)}
               {' '}
               {whoMoves() === '⚪' ? '⚪' : ''}
             </h2>
@@ -235,10 +240,10 @@ export default function GamePage() {
             </div>
             <div className="btns-box">
               <CardActions>
-                <Button size="big" onClick={() => restartHandler()}>Reset</Button>
+                <Button style={{ color: 'black' }} size="big" onClick={() => restartHandler()}>Reset</Button>
               </CardActions>
               <CardActions>
-                <Button size="big" onClick={() => undoHandler()}>Undo</Button>
+                <Button style={{ color: 'black' }} size="big" onClick={() => undoHandler()}>Undo</Button>
               </CardActions>
             </div>
           </div>
