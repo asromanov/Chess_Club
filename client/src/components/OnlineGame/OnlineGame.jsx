@@ -112,9 +112,9 @@ export default function GamePage() {
     dispatch(setFen(game.current.fen()));
   };
 
-  // useEffect(() => {
-  //   game.current.move(onlinegame.moveMade);
-  // }, [onlinegame.moveMade]);
+  useEffect(() => {
+    game.current.move(onlinegame.moveMade);
+  }, [onlinegame.moveMade]);
 
   const whoMoves = () => {
     if (fen === 'start') {
