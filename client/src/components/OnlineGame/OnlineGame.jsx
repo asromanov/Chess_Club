@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
-import './onlineGame.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { moveGame } from '../../redux/sagasFunctions/gameFunctions';
+import setStartGame from '../../redux/actions/gameActions';
+// import { Button, CardActions } from '@mui/material';
+import './onlineGame.css';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
 
@@ -15,13 +18,13 @@ export default function GamePage() {
   console.log(nextMoves);
 
   const [gameOver, setGameOver] = useState();
-
   const dispatch = useDispatch();
 
   const game = useRef(null);
 
   useEffect(() => {
     game.current = new Chess();
+    dispatch(setStartGame(game.current));
   }, []);
 
   useEffect(() => {
@@ -88,11 +91,13 @@ export default function GamePage() {
     // console.log(sourceSquare, targetSquare, piece);
     // если легальный, устанавливаем новую позиуцию
 
+    setFen(game.current.fen());
+    dispatch(moveGame(move));
+
     dispatch(setMoves(nextMove));
 
     dispatch(setFen(game.current.fen()));
   };
-
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
@@ -106,6 +111,10 @@ export default function GamePage() {
     game.current.undo();
     dispatch(setFen(game.current.fen()));
   };
+
+  // useEffect(() => {
+  //   game.current.move(onlinegame.moveMade);
+  // }, [onlinegame.moveMade]);
 
   const whoMoves = () => {
     if (fen === 'start') {
@@ -146,7 +155,6 @@ export default function GamePage() {
     startTimer();
   };
 
-  //
   const chessBoardLocation = {
     display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
 
