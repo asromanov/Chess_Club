@@ -67,7 +67,7 @@ export default function GamePage() {
   }, [fen]);
 
   // console.log({ ...game.current });
-  console.log(fen);
+  // console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
     const promotions = game.current.moves({ verbose: true }).filter((m) => m.promotion);
@@ -75,8 +75,9 @@ export default function GamePage() {
     if (promotions.some((p) => `${p.from}:${p.to}` === `${sourceSquare}:${targetSquare}`)) {
       promotionTo = prompt('Превратите пешку в: r (ладью), b (слона), q (ферзя), или n (коня).');
       if (!(promotionTo === 'r' || promotionTo === 'b' || promotionTo === 'q' || promotionTo === 'n')) {
-        alert('Если не выбирете, ваша пешка автоматически станет ферзем.');
+        // alert('Если не выбирете, ваша пешка автоматически станет ферзем.');
         promotionTo = 'q';
+        // promotionTo = input;
       }
     }
 
@@ -137,7 +138,7 @@ export default function GamePage() {
         });
         return 300;
       }
-      // console.log(prev);
+
       return prev - 1;
     });
   }
@@ -150,7 +151,6 @@ export default function GamePage() {
         });
         return 300;
       }
-      // console.log(prev);
       return prev - 1;
     });
   }
@@ -200,6 +200,7 @@ export default function GamePage() {
       <div className="MainContainer">
         <div style={chessBoardLocation}>
           <div className="ChessBox">
+            {/* <Timer time={blackTime} whoMoves={whoMoves} /> */}
             <h2 className="blackTime">
               ⌛
               {' '}
@@ -219,6 +220,7 @@ export default function GamePage() {
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
               }}
             />
+            {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
             <h2 className="whiteTime">
               ⌛
               {' '}
