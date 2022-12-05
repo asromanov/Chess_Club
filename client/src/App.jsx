@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from './components/Main/Main';
 import NavBar from './components/NavBar/NavBar';
@@ -12,29 +11,30 @@ import ProtectedRoute from './components/hoc/ProtectedRoute';
 import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
 import { socketInit } from './redux/actions/wsActions';
+import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Проверка авторизации
-    dispatch(checkAuthAsync());
-  }, []);
-
+  // const navigate = useNavigate();
   useEffect(() => {
     if (authUser?.id) {
       dispatch(socketInit());
     }
-  }, [authUser?.id]);
+  }, [authUser]);
+
+  // useEffect(() => {
+  //   if (game.isActive) {
+  //     navigate('/onlinegame');
+  //   }
+  // }, [game.isActive]);
 
   useEffect(() => {
-    if (game.isActive) {
-      navigate('/onlinegame');
-    }
-  }, [game.isActive]);
+    dispatch(checkAuthAsync());
+  }, []);
+
   return (
-    <Container maxWidth="lg">
+    <>
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -45,8 +45,8 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
         <Route path="/game" element={<GamePage />} />
-        {/* <Route path="/onlineuser" element={<OnlinePlayersPage />} /> */}
+        <Route path="/friends" element={<OnlinePlayersPage />} />
       </Routes>
-    </Container>
+    </>
   );
 }

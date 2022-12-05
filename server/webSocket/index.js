@@ -8,23 +8,23 @@ wss.on('connection', (ws, request, wsMap) => {
   wsMap.set(id, {
     ws,
     user: request.session.user,
-    status: 'online', // ? gameover, in-game, mathcmaking, searching
-    room: null,
-    board: null,
-    opponent: null,
+    // status: 'online', // ? gameover, in-game, mathcmaking, searching
+    // room: null,
+    // board: null,
+    // opponent: null,
   }); // id -> ws
 
   for (const [, wsClient] of wsMap) {
     wsClient.ws.send(
       JSON.stringify({
-        type: 'SET_ONLINE_PLAYERS',
+        type: 'SET_ONLINE_FRIENDS',
         payload: Array.from(wsMap.values()).map((el) => el.user),
       }),
     );
   }
 
-  ws.on('message', async (data) => {
-    const { type, payload } = JSON.parse(data);
+  ws.on('message', async (resData) => {
+    const { type, payload } = JSON.parse(resData);
 
     switch (type) {
       case 'SEND_INVITE':
@@ -91,7 +91,7 @@ wss.on('connection', (ws, request, wsMap) => {
     for (const [, wsClient] of wsMap) {
       wsClient.ws.send(
         JSON.stringify({
-          type: 'SET_ONLINE_PLAYERS',
+          type: 'SET_ONLINE_FRIENDS',
           payload: Array.from(wsMap.values()).map((el) => el.user),
         }),
       );
@@ -103,7 +103,7 @@ wss.on('connection', (ws, request, wsMap) => {
     for (const [, wsClient] of wsMap) {
       wsClient.ws.send(
         JSON.stringify({
-          type: 'SET_ONLINE_PLAYERS',
+          type: 'SET_ONLINE_FRIENDS',
           payload: Array.from(wsMap.values()).map((el) => el.user),
         }),
       );
@@ -111,5 +111,4 @@ wss.on('connection', (ws, request, wsMap) => {
   });
 });
 
-// ws.on('');
 module.exports = wss;

@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
-import initWebSocketWatcher from './playersWatcherSaga';
+import friendsWatcher from './friendsWatcherSaga';
 
 export default function* rootSaga() {
-  yield all([initWebSocketWatcher()]);
+  yield all([friendsWatcher()]);
 }
