@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Main() {
   const navigate = useNavigate();
   const chessBoardLocation = {
-    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '120px',
 
   };
   return (
