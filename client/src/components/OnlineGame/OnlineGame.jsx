@@ -29,11 +29,7 @@ export default function GamePage() {
 
   useEffect(() => {
     if ((game.current.inCheck()) && !(game.current.isCheckmate())) {
-      // setShowCheck((prev) => !prev);
-      setTimeout(setShowCheck((prev) => !prev), 1000);
-
-      // setShowCheck((prev) => !prev);
-      // alert('Шах!');
+      setShowCheck((prev) => !prev);
     }
     if (!(game.current.inCheck())) {
       setShowCheck(false);
