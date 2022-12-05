@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from './components/Main/Main';
 import NavBar from './components/NavBar/NavBar';
@@ -16,12 +16,18 @@ import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage'
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
-
+  // const navigate = useNavigate();
   useEffect(() => {
     if (authUser?.id) {
       dispatch(socketInit());
     }
   }, [authUser]);
+
+  // useEffect(() => {
+  //   if (game.isActive) {
+  //     navigate('/onlinegame');
+  //   }
+  // }, [game.isActive]);
 
   useEffect(() => {
     dispatch(checkAuthAsync());
