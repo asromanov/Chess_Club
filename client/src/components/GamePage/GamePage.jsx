@@ -12,19 +12,43 @@ export default function GamePage() {
     game.current = new Chess();
   }, []);
 
+  function makeRandomMove() {
+    const possibleMoves = game.current.moves();
+    if (game.current.isGameOver() || game.current.isDraw() || possibleMoves.length === 0) {
+      // setFen(game.current.fen());
+      return;
+    } // exit if the game is over
+    const randomIndex = Math.floor(Math.random() * possibleMoves.length);
+    game.current.move(possibleMoves[randomIndex]);
+    setFen(game.current.fen());
+  }
+
   const onDrop = ({ sourceSquare, targetSquare }) => {
+    const promotions = game.current.moves({ verbose: true }).filter((m) => m.promotion);
+    let promotionTo;
+    if (promotions.some((p) => `${p.from}:${p.to}` === `${sourceSquare}:${targetSquare}`)) {
+      promotionTo = prompt('Превратите пешку в: r (ладью), b (слона), q (ферзя), или n (коня).');
+      if (!(promotionTo === 'r' || promotionTo === 'b' || promotionTo === 'q' || promotionTo === 'n')) {
+        alert('Если не выбирете, ваша пешка автоматически станет ферзем.');
+        promotionTo = 'q';
+      }
+    }
+
     const move = game.current.move({
       from: sourceSquare,
       to: targetSquare,
+      promotion: promotionTo,
     });
     if (move === null) return; // проверка на легальный ход
     // console.log(move);
     // если легальный, устанавливаем новую позиуцию
-
     setFen(game.current.fen());
+
+    // makeRandomMove();
+    setTimeout(makeRandomMove, 200);
   };
 
-  console.log(game);
+  console.log(game.current);
   console.log(fen);
 
   const resetGame = () => {
@@ -57,4 +81,3 @@ export default function GamePage() {
     </div>
   );
 }
-
