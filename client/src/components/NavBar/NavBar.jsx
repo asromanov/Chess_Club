@@ -47,6 +47,9 @@ export default function NavBar() {
                 <NavLink to="/game" style={linkStyle}>Game</NavLink>
               </Box>
               <Box mr={5}>
+                <NavLink to="/xxx" style={linkStyle}>XXX</NavLink>
+              </Box>
+              <Box mr={5}>
                 <NavLink to="/friends" style={linkStyle}>Online Players</NavLink>
               </Box>
               <Box mr={5}>
