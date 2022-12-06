@@ -4,6 +4,7 @@ import Chessboard from 'chessboardjsx'; // used for the chessboard React compone
 import { Chess } from 'chess.js'; // used for chess logic validation (game rules) and to generate FENs
 import ChessMenu from './ChessMenu';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Note, if you are unfamilliar with what a FEN is
 // A FEN is a string of characters used to represent a chess position
