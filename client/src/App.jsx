@@ -13,6 +13,7 @@ import { checkAuthAsync } from './redux/actions/authActions';
 import { socketInit } from './redux/actions/wsActions';
 import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 import Footer from './components/Footer/Footer';
+import Apps from './components/Socket/Apps';
 import GameInit from './components/GameInit/GameInit';
 
 export default function App() {
@@ -49,6 +50,8 @@ export default function App() {
         <Route path="/gameinit" element={<GameInit />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/friends" element={<OnlinePlayersPage />} />
+        <Route path="/xxx" element={<Apps />} />
+
       </Routes>
       <Footer />
     </>
