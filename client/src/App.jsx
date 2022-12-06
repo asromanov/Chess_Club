@@ -51,7 +51,6 @@ export default function App() {
         <Route path="/game" element={<GamePage />} />
         <Route path="/friends" element={<OnlinePlayersPage />} />
         <Route path="/xxx" element={<Apps />} />
-
       </Routes>
       <Footer />
     </>
