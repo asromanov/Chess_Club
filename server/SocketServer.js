@@ -2,7 +2,7 @@ const http = require('http');
 const express = require('express');
 
 const app = express(); // creating instance of express
-const server = http.createServer(app); // creating http server from express instance & enabling cross access origin resource sharing
+const server = http.createServer(app);
 
 const URLfrontEnd = 'http://localhost:3000';
 const io = require('socket.io')(server, {
