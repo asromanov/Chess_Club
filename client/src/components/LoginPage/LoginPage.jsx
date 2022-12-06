@@ -35,7 +35,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in
+            Вход
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -43,7 +43,7 @@ export default function LoginPage() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Адрес электронной почты"
               name="email"
               autoFocus
             />
@@ -52,7 +52,7 @@ export default function LoginPage() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
             />
@@ -63,7 +63,7 @@ export default function LoginPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              Войти
             </LoadingButton>
           </Box>
         </Box>
