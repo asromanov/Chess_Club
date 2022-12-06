@@ -50,6 +50,9 @@ export default function NavBar() {
                 <NavLink to="/friends" style={linkStyle}>Online Players</NavLink>
               </Box>
               <Box mr={5}>
+                <NavLink to="/gameinit" style={linkStyle}>GameInit</NavLink>
+              </Box>
+              <Box mr={5}>
                 <Button
                   style={linkStyle}
                   key="logout"
