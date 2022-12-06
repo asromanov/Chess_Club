@@ -64,8 +64,8 @@ export default function GameInit() {
     }
   }, [fen]);
 
-  // console.log({ ...game.current });
-  // console.log(fen);
+  console.log({ ...game.current });
+  console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
     const promotions = game.current.moves({ verbose: true }).filter((m) => m.promotion);
@@ -75,7 +75,6 @@ export default function GameInit() {
       if (!(promotionTo === 'r' || promotionTo === 'b' || promotionTo === 'q' || promotionTo === 'n')) {
         // alert('Если не выбирете, ваша пешка автоматически станет ферзем.');
         promotionTo = 'q';
-        // promotionTo = input;
       }
     }
 
@@ -89,9 +88,11 @@ export default function GameInit() {
     const move = game.current.move(nextMove);
     if (move === null) return; // проверка на легальный ход
     console.log(nextMoves);
+    console.log({ ...game.current });
+    console.log(fen);
     // если легальный, устанавливаем новую позиуцию
 
-    setFen(game.current.fen());
+    // setFen(game.current.fen());
     // dispatch(moveGame(move));
 
     dispatch(setMoves(nextMove));
@@ -160,7 +161,6 @@ export default function GameInit() {
             </h2>
           </div>
           <div>
-            {/* <h2>{game?.current?.pgn()}</h2> */}
             <div className="PgnContainer">
               <h2 style={{ fontWeight: 'normal' }}>
                 {game?.current?.pgn()}

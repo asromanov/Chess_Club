@@ -68,7 +68,7 @@ export default function GamePage() {
   }, [fen]);
 
   // console.log({ ...game.current });
-  // console.log(fen);
+  console.log(fen);
 
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
     const promotions = game.current.moves({ verbose: true }).filter((m) => m.promotion);
