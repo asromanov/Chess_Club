@@ -3,12 +3,11 @@ import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-// import { moveGame } from '../../redux/sagas/friendsWatcherSaga';
-import './onlineGame.css';
 import { setFen } from '../../redux/actions/fenActions';
 import { setMoves } from '../../redux/actions/moveActions';
+import './onlineGame.css';
 
-export default function GamePage() {
+export default function GameInit() {
   // const [fen, setFen] = useState('start');
 
   const fen = useSelector((store) => store.fen);
@@ -38,8 +37,6 @@ export default function GamePage() {
         info1: 'Мат, ',
         info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
       });
-      setWhiteTime(300);
-      setBlackTime(300);
     }
     if (game.current.isDraw()) {
       setGameOver({
@@ -106,7 +103,6 @@ export default function GamePage() {
     game.current.reset();
     setGameOver();
     dispatch(setFen('start'));
-    setTime();
   };
 
   const undoHandler = () => {
@@ -119,60 +115,6 @@ export default function GamePage() {
       return '⚪';
     }
     return game?.current?.turn() === 'w' ? '⚪' : '⚫';
-  };
-
-  // timer
-  const [blackTime, setBlackTime] = useState(300);
-  const [whiteTime, setWhiteTime] = useState(300);
-  const timer = useRef(null);
-
-  function setTime() {
-    setWhiteTime(300);
-    setBlackTime(300);
-  }
-
-  function decrementBlackTimer() {
-    setBlackTime((prev) => {
-      if (prev === 0) {
-        setGameOver({
-          info1: 'Закончилось время, ',
-          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
-        });
-        return 300;
-      }
-
-      return prev - 1;
-    });
-  }
-  function decrementWhiteTimer() {
-    setWhiteTime((prev) => {
-      if (prev === 0) {
-        setGameOver({
-          info1: 'Закончилось время, ',
-          info2: `${game.current.turn() === 'w' ? 'черные' : 'белые'} выиграли`,
-        });
-        return 300;
-      }
-      return prev - 1;
-    });
-  }
-
-  function startTimer() {
-    if (timer.current) {
-      clearInterval(timer.current);
-    }
-    const callback = game?.current?.turn() === 'w' ? decrementWhiteTimer : decrementBlackTimer;
-    timer.current = setInterval(callback, 1000);
-  }
-  useEffect(() => {
-    startTimer();
-  }, [fen]);
-
-  const restartHandler = () => {
-    game.current.clear();
-    game.current.reset();
-    dispatch(setFen('start'));
-    setTime();
   };
 
   const chessBoardLocation = {
@@ -202,16 +144,7 @@ export default function GamePage() {
       <div className="MainContainer">
         <div style={chessBoardLocation}>
           <div className="ChessBox">
-            {/* <Timer time={blackTime} whoMoves={whoMoves} /> */}
             <h2 className="blackTime">
-              ⌛
-              {' '}
-              {Math.floor(blackTime / 60)}
-              {' '}
-              :
-              {' '}
-              {Math.floor(blackTime % 60) < 10 ? `0${Math.floor(blackTime % 60)}` : Math.floor(blackTime % 60)}
-              {' '}
               {whoMoves() === '⚫' ? '⚫' : ''}
             </h2>
             <Chessboard
@@ -222,16 +155,7 @@ export default function GamePage() {
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
               }}
             />
-            {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
             <h2 className="whiteTime">
-              ⌛
-              {' '}
-              {Math.floor(whiteTime / 60)}
-              {' '}
-              :
-              {' '}
-              {Math.floor(whiteTime % 60) < 10 ? `0${Math.floor(whiteTime % 60)}` : Math.floor(whiteTime % 60)}
-              {' '}
               {whoMoves() === '⚪' ? '⚪' : ''}
             </h2>
           </div>
@@ -243,9 +167,6 @@ export default function GamePage() {
               </h2>
             </div>
             <div className="btns-box">
-              <CardActions>
-                <Button style={{ color: 'black' }} size="big" onClick={() => restartHandler()}>Reset</Button>
-              </CardActions>
               <CardActions>
                 <Button style={{ color: 'black' }} size="big" onClick={() => undoHandler()}>Undo</Button>
               </CardActions>

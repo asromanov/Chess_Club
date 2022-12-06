@@ -13,6 +13,7 @@ import { checkAuthAsync } from './redux/actions/authActions';
 import { socketInit } from './redux/actions/wsActions';
 import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 import Footer from './components/Footer/Footer';
+import GameInit from './components/GameInit/GameInit';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
@@ -45,6 +46,7 @@ export default function App() {
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
+        <Route path="/gameinit" element={<GameInit />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/friends" element={<OnlinePlayersPage />} />
       </Routes>
