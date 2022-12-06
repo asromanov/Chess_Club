@@ -13,7 +13,7 @@ const linkStyle = {
   textDecoration: 'none',
   color: 'white',
   fontFamily: 'Roboto',
-  fontSize: 20,
+  fontSize: 16,
 };
 
 export default function NavBar() {
@@ -26,9 +26,9 @@ export default function NavBar() {
         id="NavBar"
         position="static"
         sx={{
-          background: '-webkit-linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
-          background: '-moz-linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
-          background: 'linear-gradient(90deg, rgb(244, 244, 244), rgb(22, 22, 22))',
+          background: '-webkit-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
+          background: '-moz-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
+          background: 'linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
         }}
       >
         <Toolbar>
@@ -36,24 +36,24 @@ export default function NavBar() {
             <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px', paddingTop: '.2rem' }} />
           </Box>
           <Box mr={5}>
-            <NavLink to="/" style={linkStyle}>Main</NavLink>
+            <NavLink to="/" style={linkStyle}>Главная</NavLink>
           </Box>
           {user?.id ? (
             <>
               <Box mr={5}>
-                <NavLink to="/onlinegame" style={linkStyle}>Online</NavLink>
+                <NavLink to="/onlinegame" style={linkStyle}>Онлайн</NavLink>
               </Box>
               <Box mr={5}>
-                <NavLink to="/game" style={linkStyle}>Game</NavLink>
+                <NavLink to="/game" style={linkStyle}>Игра с компом</NavLink>
               </Box>
               <Box mr={5}>
-                <NavLink to="/xxx" style={linkStyle}>XXX</NavLink>
+                <NavLink to="/xxx" style={linkStyle}>Игра по сети</NavLink>
               </Box>
               <Box mr={5}>
-                <NavLink to="/friends" style={linkStyle}>Online Players</NavLink>
+                <NavLink to="/friends" style={linkStyle}>Друзья</NavLink>
               </Box>
               <Box mr={5}>
-                <NavLink to="/gameinit" style={linkStyle}>GameInit</NavLink>
+                <NavLink to="/gameinit" style={linkStyle}>Гейм</NavLink>
               </Box>
               <Box mr={5}>
                 <Button
@@ -61,12 +61,12 @@ export default function NavBar() {
                   key="logout"
                   onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); navigate('/'); }}
                 >
-                  Logout
+                  Выход
                 </Button>
               </Box>
               <Box ml={100}>
                 <div style={linkStyle}>
-                  Welcome,
+                  Добро пожаловать,
                   {' '}
                   {user?.name}
                   !
@@ -77,10 +77,10 @@ export default function NavBar() {
           ) : (
             <>
               <Box mr={5}>
-                <NavLink to="/login" style={linkStyle}>Login</NavLink>
+                <NavLink to="/login" style={linkStyle}>Вход</NavLink>
               </Box>
               <Box mr={5}>
-                <NavLink to="/signup" style={linkStyle}>Sign Up</NavLink>
+                <NavLink to="/signup" style={linkStyle}>Регистрация</NavLink>
               </Box>
 
             </>

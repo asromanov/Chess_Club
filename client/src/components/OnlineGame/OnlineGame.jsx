@@ -203,7 +203,7 @@ export default function GamePage() {
         <div style={chessBoardLocation}>
           <div className="ChessBox">
             {/* <Timer time={blackTime} whoMoves={whoMoves} /> */}
-            <h2 className="blackTime">
+            <h2 style={{ marginBottom: '20px' }} className="blackTime">
               ⌛
               {' '}
               {Math.floor(blackTime / 60)}
@@ -223,7 +223,7 @@ export default function GamePage() {
               }}
             />
             {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
-            <h2 className="whiteTime">
+            <h2 style={{ marginTop: '20px' }} className="whiteTime">
               ⌛
               {' '}
               {Math.floor(whiteTime / 60)}
@@ -236,18 +236,15 @@ export default function GamePage() {
             </h2>
           </div>
           <div>
-            {/* <h2>{game?.current?.pgn()}</h2> */}
             <div className="PgnContainer">
-              <h2 style={{ fontWeight: 'normal' }}>
-                {game?.current?.pgn()}
-              </h2>
+              {game?.current?.pgn()}
             </div>
             <div className="btns-box">
               <CardActions>
-                <Button style={{ color: 'black' }} size="big" onClick={() => restartHandler()}>Reset</Button>
+                <Button style={{ color: 'black', fontSize: '20px' }} size="big" onClick={() => restartHandler()}>🤚🏼</Button>
               </CardActions>
               <CardActions>
-                <Button style={{ color: 'black' }} size="big" onClick={() => undoHandler()}>Undo</Button>
+                <Button style={{ color: 'black', fontSize: '20px' }} size="big" onClick={() => undoHandler()}>↩️</Button>
               </CardActions>
             </div>
           </div>
