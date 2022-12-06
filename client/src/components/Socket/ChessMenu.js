@@ -23,7 +23,7 @@ class ChessMenu extends React.Component {
                   value={this.props.passwordCreationInput}
                   onChange={this.props.handleCreationInputChange}
                 />
-                <Button style={{ marginTop: '10px' }} variant="primary" onClick={this.props.handleCreationInput}>
+                <Button style={{ marginTop: '10px' }} variant="secondary" onClick={this.props.handleCreationInput}>
                   Создать игру
                 </Button>
                 <div style={{ marginTop: '10px' }} onChange={this.props.setColor}>
@@ -57,7 +57,7 @@ class ChessMenu extends React.Component {
                   onChange={this.props.handleJoinInputChange}
                 />
 
-                <Button style={{ marginTop: '10px' }} variant="primary" onClick={this.props.handleJoinInput}>
+                <Button style={{ marginTop: '10px' }} variant="secondary" onClick={this.props.handleJoinInput}>
                   Войти в игру
                 </Button>
               </Form.Group>

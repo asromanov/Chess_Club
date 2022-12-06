@@ -31,5 +31,7 @@ module.exports = {
     'no-use-before-define': 0,
     'no-dupe-keys': 0,
     'func-names': 0,
+    'react/destructuring-assignment': 0,
+    'react/prefer-stateless-function': 0,
   },
 };
