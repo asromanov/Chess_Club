@@ -19,18 +19,11 @@ import GameInit from './components/GameInit/GameInit';
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   useEffect(() => {
     if (authUser?.id) {
       dispatch(socketInit());
     }
   }, [authUser]);
-
-  // useEffect(() => {
-  //   if (game.isActive) {
-  //     navigate('/onlinegame');
-  //   }
-  // }, [game.isActive]);
 
   useEffect(() => {
     dispatch(checkAuthAsync());
