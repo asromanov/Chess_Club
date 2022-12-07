@@ -10,10 +10,6 @@ import ChessMenu from './ChessMenu';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Note, if you are unfamilliar with what a FEN is
-// A FEN is a string of characters used to represent a chess position
-// You can read more about it here : https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
-
 class Apps extends React.Component {
   constructor(props) {
     super(props);

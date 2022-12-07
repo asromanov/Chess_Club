@@ -35,7 +35,7 @@ export default function SignupPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Регистрация
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -43,7 +43,7 @@ export default function SignupPage() {
               required
               fullWidth
               id="name"
-              label="Username"
+              label="Имя"
               name="name"
               autoFocus
             />
@@ -52,7 +52,7 @@ export default function SignupPage() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Адрес электронной почты"
               name="email"
             />
             <TextField
@@ -60,7 +60,7 @@ export default function SignupPage() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
             />
@@ -71,7 +71,7 @@ export default function SignupPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Зарегистрироваться
             </LoadingButton>
           </Box>
         </Box>

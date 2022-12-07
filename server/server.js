@@ -4,16 +4,23 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const cors = require('cors');
 const http = require('http');
-const wss = require('./webSocket');
+
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 const authRouter = require('./routes/authRouter');
 const friendsRouter = require('./routes/friendsRouter');
 
 require('dotenv').config();
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
-app.locals.ws = new Map(); // id -> ws
+app.locals.ws = new Map();
 
 app.use(
   cors({
@@ -42,24 +49,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRouter);
 app.use('/api/friends', friendsRouter);
 
-const server = http.createServer(app);
-
-server.on('upgrade', (request, socket, head) => {
-  console.log('Parsing session from request...');
-
-  sessionParser(request, {}, () => {
-    if (!request.session.user) {
-      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-      socket.destroy();
-      return;
-    }
-
-    console.log('Session is parsed!');
-
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit('connection', ws, request, app.locals.ws);
-    });
+io.on('connection', (socket) => {
+  console.log('user connected');
+  socket.on('finalShake', (Object) => {
+    socket.broadcast.emit(Object.ownerId, Object);
+  });
+  socket.on('JoinGame', (joinObject) => {
+    console.log(`JoinGame request received from ${joinObject.senderId}`);
+    console.log(`password of room: ${joinObject.pw}`);
+    socket.broadcast.emit('gameSend', joinObject);
+  });
+  socket.on('PositionSend', (FENinfo) => {
+    console.log('Position send worked');
+    socket.broadcast.emit('NewFenFromServer', FENinfo);
   });
 });
 
-server.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port:${PORT}`));
