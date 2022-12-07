@@ -120,13 +120,13 @@ class Apps extends React.Component {
   handleCreationInput() {
     if (this.state.userColor !== '') {
       this.setState({
-        userInfoMessage: 'Game created: waiting for your opponent to join...',
+        userInfoMessage: 'Игра создана, ожидаем ответ от вашего оппонента',
       });
       this.setState({ password: this.state.passwordCreationInput });
       this.setState({ passwordCreationInput: '' });
       this.setState({ currentPositionFen: this.state.chessGameObject.fen() });
     } else {
-      this.setState({ userInfoMessage: 'You must select a color' });
+      this.setState({ userInfoMessage: 'Выберите цвет фигур' });
     }
   }
 
