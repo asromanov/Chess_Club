@@ -14,6 +14,7 @@ import { socketInit } from './redux/actions/wsActions';
 import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 import Footer from './components/Footer/Footer';
 import Apps from './components/Socket/Apps';
+import './main.css';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
@@ -29,7 +30,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <div className="mainpage">
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -44,6 +45,6 @@ export default function App() {
         <Route path="/game" element={<Apps />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
