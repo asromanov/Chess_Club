@@ -15,8 +15,9 @@ export default function Main() {
         <Chessboard id="BasicBoard" />
       </div>
       <div className="ButtonContainer">
-        <button type="button" className="button-41" onClick={() => navigate('/onlinegame')}>Игра по сети</button>
-        <button type="button" className="button-42" onClick={() => navigate('/game')}>Игра с компьютером</button>
+        <button type="button" className="button-41" onClick={() => navigate('/game')}>Игра по сети</button>
+        <button type="button" className="button-42" onClick={() => navigate('/train')}>Игра с компьютером</button>
+        <button type="button" className="button-43" onClick={() => navigate('/onlinegame')}>Тренировка</button>
       </div>
     </div>
   );
