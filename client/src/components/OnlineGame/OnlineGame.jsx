@@ -179,6 +179,9 @@ export default function GamePage() {
     display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
 
   };
+
+  console.log(game);
+
   return (
     <>
       <div className="whoMoves">
