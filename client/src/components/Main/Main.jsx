@@ -10,7 +10,7 @@ export default function Main() {
 
   };
   return (
-    <div className="MainContainer">
+    <div className="Main">
       <div style={chessBoardLocation}>
         <Chessboard id="BasicBoard" />
       </div>

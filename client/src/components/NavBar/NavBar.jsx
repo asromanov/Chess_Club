@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import '@fontsource/roboto/500.css';
 import { logoutUserAsync } from '../../redux/actions/authActions';
-import { userLoggedOut } from '../../redux/actions/friendsActions';
 
 const linkStyle = {
   textTransform: 'none',
@@ -27,12 +26,13 @@ export default function NavBar() {
           id="NavBar"
           position="static"
           sx={{
-            background: '-webkit-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
-            background: '-moz-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
-            background: 'linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
+            background: '-webkit-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
+            background: '-moz-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
+            background: 'linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
           }}
+
         >
-          <Toolbar>
+          <Toolbar className="simon">
             <Box mr={5}>
               <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px', paddingTop: '.2rem' }} />
             </Box>
@@ -42,27 +42,24 @@ export default function NavBar() {
             {user?.id ? (
               <>
                 <Box mr={5}>
-                  <NavLink to="/onlinegame" style={linkStyle}>Онлайн</NavLink>
+                  <NavLink to="/onlinegame" style={linkStyle}>Тренировка</NavLink>
                 </Box>
                 <Box mr={5}>
-                  <NavLink to="/train" style={linkStyle}>Игра с компом</NavLink>
+                  <NavLink to="/train" style={linkStyle}>Компьютер</NavLink>
                 </Box>
                 <Box mr={5}>
-                  <NavLink to="/game" style={linkStyle}>Игра по сети</NavLink>
-                </Box>
-                <Box mr={5}>
-                  <NavLink to="/friends" style={linkStyle}>Друзья</NavLink>
+                  <NavLink to="/game" style={linkStyle}>Онлайн</NavLink>
                 </Box>
                 <Box mr={5}>
                   <Button
                     style={linkStyle}
                     key="logout"
-                    onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); navigate('/'); }}
+                    onClick={() => { dispatch(logoutUserAsync()); navigate('/'); }}
                   >
                     Выход
                   </Button>
                 </Box>
-                <Box ml={100}>
+                <Box ml={10}>
                   <div style={linkStyle}>
                     Добро пожаловать,
                     {' '}

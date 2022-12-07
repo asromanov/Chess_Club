@@ -1,48 +1,47 @@
 /* eslint-disable react/sort-comp */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/sort-comp */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
 import io from 'socket.io-client';
 import React from 'react';
-import Chessboard from 'chessboardjsx'; // used for the chessboard React component
-import Chess from 'chessold'; // used for chess logic validation (game rules) and to generate FENs
+import Chessboard from 'chessboardjsx';
+import Chess from 'chessold';
 import ChessMenu from './ChessMenu';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalPageOnline from './ModalPageOnline';
 
-class Apps extends React.Component {
+class PlayWithFriend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inGame: false, // controls rendering of the chessboard component
-      passwordCreationInput: '', // input box for password creation
-      gameJoinInput: '', // input box for game joining
-      password: '', // when a socket event is received with this value, start the game
-      userSocket: '', // the user's client socket object
-      userSocketId: '', // the user's client socket ID
-      opponentSocketId: '', // the opponent's socket ID
+      inGame: false,
+      passwordCreationInput: '',
+      gameJoinInput: '',
+      password: '',
+      userSocket: '',
+      userSocketId: '',
+      opponentSocketId: '',
       userColor: '',
       opponentColor: '',
-      turnToMove: 'white', // used to determine if move events should trigger for the player
-      currentPositionFen: '', // used to render the current chess position for the client
-      userInfoMessage: '', // will be used to render info for the user
-      chessGameObject: new Chess(), // the chess game object used to validate chess logic
-      sourceSquare: '', // where the client's most recent mouse over event was (not holding down the mouse)
-      targetSquare: '', // where the client's most recent drag over event was (holding down the mouse)
+      turnToMove: 'white',
+      currentPositionFen: '',
+      userInfoMessage: '',
+      chessGameObject: new Chess(),
+      sourceSquare: '',
+      targetSquare: '',
     };
-
-    console.log(this.state);
-    const socketTemp = io('http://localhost:8080');
+    const socketTemp = io('http://localhost:3001');
     socketTemp.on('connect', () => {
-      // initializing the client socket , and setting initial state
       this.setState({ userSocket: socketTemp, userSocketId: socketTemp.id });
 
-      // when an opponent enters password and sends game request, and it is received by the host
       socketTemp.on('gameSend', (joinObj) => {
         console.log(`message received from${joinObj.senderId}`);
 
-        // if the received password matches the host password -> start game
         if (this.state.inGame === false && this.state.password !== '') {
           console.log(`message success from${joinObj.senderId}`);
 
@@ -53,38 +52,32 @@ class Apps extends React.Component {
             recipientColor: this.state.opponentColor,
             opponentColor: this.state.userColor,
           };
-          // this sends a final handshake to the person joining the host's game via password
 
           socketTemp.emit('finalShake', newObj);
-          this.setState({ inGame: true }); // renders the chessboard for the host
+          this.setState({ inGame: true });
         }
       });
       socketTemp.on('NewCurrentPosition', (FENstring) => {
-        // updates the new current chess position
         this.setState({ currentPositionFen: FENstring });
       });
       socketTemp.on(socketTemp.id, (oppObj) => {
         console.log('final shake ');
-        this.setState({ opponentSocketId: oppObj.usrId }); // receives final handshake
+        this.setState({ opponentSocketId: oppObj.usrId });
         this.setState({ userColor: oppObj.recipientColor });
         this.setState({ opponentColor: oppObj.opponentColor });
         this.setState({ inGame: true });
         this.setState({ currentPositionFen: this.state.chessGameObject.fen() });
       });
 
-      // when a new fen is received, (that is validated by the sender) : update the recipient fen
       socketTemp.on('NewFenFromServer', (FENobj) => {
-        // checks if the FEN is intended for the recipient
         if (this.state.userSocketId === FENobj.RecipientSocketID) {
           this.setState({
             currentPositionFen: FENobj.FEN,
           });
           this.state.chessGameObject.move(FENobj.move);
 
-          // this means the game has ended
           if (this.state.chessGameObject.game_over() === true) {
             console.log('GAME OVER');
-            // trigger modal and end the game
           }
         }
       });
@@ -100,26 +93,20 @@ class Apps extends React.Component {
     this.setColor = this.setColor.bind(this);
   }
 
-  // handles the submission of the 'join a game' submission button
-  // emits a socket event to request to join the game
   handleJoinInput() {
-    // sends the game join request
-
     const joinObject = {
       senderId: this.state.userSocketId,
       pw: this.state.gameJoinInput,
     };
 
-    this.state.userSocket.emit('JoinGame', joinObject); // user asking to join another player's game
+    this.state.userSocket.emit('JoinGame', joinObject);
     this.setState({ gameJoinInput: '' });
   }
 
-  // handles input changes on the 'join a game' input  section
   handleJoinInputChange(ev) {
     this.setState({ gameJoinInput: ev.target.value });
   }
 
-  // handles input submissions on the 'create a game' creation button
   handleCreationInput() {
     if (this.state.userColor !== '') {
       this.setState({
@@ -133,7 +120,6 @@ class Apps extends React.Component {
     }
   }
 
-  // handles input changes on the 'create a game' section
   handleCreationInputChange(ev) {
     this.setState({ passwordCreationInput: ev.target.value });
   }
@@ -154,8 +140,6 @@ class Apps extends React.Component {
   }
 
   // eslint-disable-next-line max-len
-  // the object {src , targ} is needed for ValidateMove to trigger properly, even though it isnt used
-  // this has to do with how the chessboardjsx library triggers onDrop events
   ValidateMove = ({
     src = this.state.sourceSquare,
     targ = this.state.targetSquare,
@@ -176,7 +160,6 @@ class Apps extends React.Component {
           promotion: 'q',
         });
       } else {
-        // the move that was just made ended the game
         console.log('GAME OVER');
         this.setState({ currentPositionFen: this.state.chessGameObject.fen() });
         this.SendNewFen(this.state.chessGameObject.fen(), {
@@ -184,13 +167,10 @@ class Apps extends React.Component {
           to: this.state.targetSquare,
           promotion: 'q',
         });
-        // trigger modal and end game
       }
     }
   };
 
-  // Chessboard component onDrop prop triggers ValidateMove() which triggers the SendNewFen function
-  // sends a new FEN position to the opponent
   SendNewFen(NewFEN, move) {
     this.state.userSocket.emit('PositionSend', {
       FEN: NewFEN,
@@ -199,21 +179,13 @@ class Apps extends React.Component {
     });
   }
 
-  // triggered by the Chessboard component's onMouseOverSquare prop
-  // sets the state of source sqare to the most recently moused over square
-  // moused over meaning: currently hovered over but not clicking at all
   onMouseOverSquare = (sq) => {
     this.setState({ sourceSquare: sq });
-    // console.log("Mouse Over: " + sq);
   };
 
-  // triggered by the Chessboard component's onDragOverSquare prop
-  // sets the state of target square to the currently dragged over square
-  // dragged over meaning: currently hovered over while clicking
   onDragOverSquare = (sq) => {
     if (this.state.sourceSquare !== sq) {
       this.setState({ targetSquare: sq });
-      // console.log("Drag over: " + sq);
     }
   };
 
@@ -223,12 +195,6 @@ class Apps extends React.Component {
     console.log(this.state.chessGameObject.turn());
     const pgn = this.state.chessGameObject.pgn();
     const turn = this.state.chessGameObject.turn();
-    const mate = this.state.chessGameObject.in_checkmate();
-    // console.log(mate);
-    const over = this.state.chessGameObject.game_over();
-    // console.log(over);
-    // renders the chessboard component only if the user is in a game
-    // if not, renders the menu , so that they can enter a game from it
     if (inGame === false) {
       UserMenu = (
         <ChessMenu
@@ -259,7 +225,7 @@ class Apps extends React.Component {
           />
           <ModalPageOnline chess={this.state.chessGameObject} />
           <div className="PgnContainer1">
-            {turn == 'w' ? '⚪' : '⚫' }
+            {turn === 'w' ? '⚪' : '⚫' }
             <div style={{ fontWeight: 'normal' }}>
               {pgn}
             </div>
@@ -271,4 +237,4 @@ class Apps extends React.Component {
   }
 }
 
-export default Apps;
+export default PlayWithFriend;
