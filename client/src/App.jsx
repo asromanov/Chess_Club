@@ -10,19 +10,12 @@ import SignupPage from './components/SignUpPage/SignUpPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
-import { socketInit } from './redux/actions/wsActions';
-import OnlinePlayersPage from './components/OnlinePlayersPage/OnlinePlayersPage';
 import Footer from './components/Footer/Footer';
 import Apps from './components/Socket/Apps';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (authUser?.id) {
-      dispatch(socketInit());
-    }
-  }, [authUser]);
 
   useEffect(() => {
     dispatch(checkAuthAsync());
@@ -40,7 +33,6 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
         <Route path="/onlinegame" element={<OnlineGame />} />
         <Route path="/train" element={<GamePage />} />
-        <Route path="/friends" element={<OnlinePlayersPage />} />
         <Route path="/game" element={<Apps />} />
       </Routes>
       <Footer />
