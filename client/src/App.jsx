@@ -12,6 +12,7 @@ import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
 import Footer from './components/Footer/Footer';
 import Apps from './components/Socket/Apps';
+import './main.css';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
@@ -22,7 +23,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <div className="mainpage">
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -36,6 +37,6 @@ export default function App() {
         <Route path="/game" element={<Apps />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }

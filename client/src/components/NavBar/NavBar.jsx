@@ -26,12 +26,13 @@ export default function NavBar() {
           id="NavBar"
           position="static"
           sx={{
-            background: '-webkit-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
-            background: '-moz-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
-            background: 'linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 7%, rgb(59, 60, 54) 100%)',
+            background: '-webkit-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
+            background: '-moz-linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
+            background: 'linear-gradient(90deg, rgb(229, 236, 235), rgb(12, 13, 13) 11%, rgb(59, 60, 54) 100%)',
           }}
+
         >
-          <Toolbar>
+          <Toolbar className="simon">
             <Box mr={5}>
               <img src="logo.png" alt="logo" style={{ width: '70px', heigth: '70px', paddingTop: '.2rem' }} />
             </Box>
@@ -41,13 +42,13 @@ export default function NavBar() {
             {user?.id ? (
               <>
                 <Box mr={5}>
-                  <NavLink to="/onlinegame" style={linkStyle}>Онлайн</NavLink>
+                  <NavLink to="/onlinegame" style={linkStyle}>Тренировка</NavLink>
                 </Box>
                 <Box mr={5}>
-                  <NavLink to="/train" style={linkStyle}>Игра с компом</NavLink>
+                  <NavLink to="/train" style={linkStyle}>Компьютер</NavLink>
                 </Box>
                 <Box mr={5}>
-                  <NavLink to="/game" style={linkStyle}>Игра по сети</NavLink>
+                  <NavLink to="/game" style={linkStyle}>Онлайн</NavLink>
                 </Box>
                 <Box mr={5}>
                   <Button
