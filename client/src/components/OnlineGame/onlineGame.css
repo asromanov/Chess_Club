@@ -16,6 +16,7 @@
     overflow-y: scroll;
     margin: 0 0 0 15%;
     border-radius: 5px;
+    padding: 8px;
 }
 
 .PgnContainer::-webkit-scrollbar {
