@@ -9,6 +9,7 @@ import Chess from 'chessold'; // used for chess logic validation (game rules) an
 import ChessMenu from './ChessMenu';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ModalPageOnline from './ModalPageOnline';
 
 class Apps extends React.Component {
   constructor(props) {
@@ -122,13 +123,13 @@ class Apps extends React.Component {
   handleCreationInput() {
     if (this.state.userColor !== '') {
       this.setState({
-        userInfoMessage: 'Game created: waiting for your opponent to join...',
+        userInfoMessage: 'Игра создана, ожидаем ответ от вашего оппонента',
       });
       this.setState({ password: this.state.passwordCreationInput });
       this.setState({ passwordCreationInput: '' });
       this.setState({ currentPositionFen: this.state.chessGameObject.fen() });
     } else {
-      this.setState({ userInfoMessage: 'You must select a color' });
+      this.setState({ userInfoMessage: 'Выберите цвет фигур' });
     }
   }
 
@@ -222,6 +223,10 @@ class Apps extends React.Component {
     console.log(this.state.chessGameObject.turn());
     const pgn = this.state.chessGameObject.pgn();
     const turn = this.state.chessGameObject.turn();
+    const mate = this.state.chessGameObject.in_checkmate();
+    // console.log(mate);
+    const over = this.state.chessGameObject.game_over();
+    // console.log(over);
     // renders the chessboard component only if the user is in a game
     // if not, renders the menu , so that they can enter a game from it
     if (inGame === false) {
@@ -252,6 +257,7 @@ class Apps extends React.Component {
               boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
             }}
           />
+          <ModalPageOnline chess={this.state.chessGameObject} />
           <div className="PgnContainer1">
             {turn == 'w' ? '⚪' : '⚫' }
             <div style={{ fontWeight: 'normal' }}>
