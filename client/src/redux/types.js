@@ -13,15 +13,6 @@ export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const SOCKET_INIT = 'SOCKET_INIT';
 export const SET_WS = 'SET_WS';
 
-// GAME
-export const GAME_INIT = 'GAME_INIT';
-export const MOVE_MADE = 'MOVE_MADE';
-export const SEND_INVITE = 'SEND_INVITE';
-export const SHOW_INVITE = 'SHOW_INVITE';
-export const ACCEPT_INVITE = 'ACCEPT_INVITE';
-export const GAME_OVER = 'GAME_OVER';
-export const GAME_STATUS = 'GAME_STATUS';
-
 // MOVES
 export const CURRENT_FEN = 'CURRENT_FEN';
 export const CURRENT_MOVE = 'CURRENT_MOVE';
