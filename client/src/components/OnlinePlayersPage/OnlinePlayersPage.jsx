@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  List, ListItem, ListItemText, ListItemAvatar, Button,
+  List, ListItem, ListItemText, ListItemAvatar,
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import { setFriendsListAsync } from '../../redux/actions/friendsActions';
 import BadgeAvatar from './BadgeAvatar';
-import { setAcceptInvite, setSendInvite } from '../../redux/actions/gameActions';
 
 export default function OnlinePlayersPage() {
   const authUser = useSelector((state) => state.authUser);
@@ -31,9 +30,6 @@ export default function OnlinePlayersPage() {
             </ListItemAvatar>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
               <ListItemText primary={`${friend?.name}`} />
-              <Button onClick={() => dispatch(setSendInvite(friend?.id))}>Пригласить</Button>
-              <Button color="success" onClick={() => dispatch(setAcceptInvite())}>Принять</Button>
-              <Button color="error" onClick={() => dispatch()}>Отклонить</Button>
             </div>
           </ListItem>
         );
