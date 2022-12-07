@@ -2,6 +2,10 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable react/sort-comp */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/destructuring-assignment */
 import io from 'socket.io-client';
 import React from 'react';
 import Chessboard from 'chessboardjsx';
@@ -9,8 +13,9 @@ import Chess from 'chessold';
 import ChessMenu from './ChessMenu';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ModalPageOnline from './ModalPageOnline';
 
-class Apps extends React.Component {
+class PlayWithFriend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -134,6 +139,7 @@ class Apps extends React.Component {
     );
   }
 
+  // eslint-disable-next-line max-len
   ValidateMove = ({
     src = this.state.sourceSquare,
     targ = this.state.targetSquare,
@@ -186,6 +192,9 @@ class Apps extends React.Component {
   render() {
     const { inGame } = this.state;
     let UserMenu;
+    console.log(this.state.chessGameObject.turn());
+    const pgn = this.state.chessGameObject.pgn();
+    const turn = this.state.chessGameObject.turn();
     if (inGame === false) {
       UserMenu = (
         <ChessMenu
@@ -209,7 +218,18 @@ class Apps extends React.Component {
             onDragOverSquare={this.onDragOverSquare}
             onDrop={this.ValidateMove}
             darkSquareStyle={{ backgroundColor: '#429963' }}
+            boardStyle={{
+              borderRadius: '5px',
+              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+            }}
           />
+          <ModalPageOnline chess={this.state.chessGameObject} />
+          <div className="PgnContainer1">
+            {turn === 'w' ? '⚪' : '⚫' }
+            <div style={{ fontWeight: 'normal' }}>
+              {pgn}
+            </div>
+          </div>
         </div>
       );
     }
@@ -217,4 +237,4 @@ class Apps extends React.Component {
   }
 }
 
-export default Apps;
+export default PlayWithFriend;

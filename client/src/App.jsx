@@ -10,7 +10,7 @@ import SignupPage from './components/SignUpPage/SignUpPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
-import Apps from './components/Socket/Apps';
+import PlayWithFriend from './components/Socket/PlayWithFriend';
 
 export default function App() {
   const authUser = useSelector((state) => state.authUser);
@@ -32,7 +32,7 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />}>
           <Route path="/onlinegame" element={<OnlineGame />} />
           <Route path="/train" element={<GamePage />} />
-          <Route path="/game" element={<Apps />} />
+          <Route path="/game" element={<PlayWithFriend />} />
         </Route>
       </Routes>
     </div>

@@ -1,8 +1,10 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class ChessMenu extends React.Component {
   render() {
     return (
