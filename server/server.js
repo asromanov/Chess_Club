@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const cors = require('cors');
+
 const http = require('http');
 
 const app = express();
@@ -13,14 +14,15 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST'],
   },
 });
+
 const authRouter = require('./routes/authRouter');
 const friendsRouter = require('./routes/friendsRouter');
 
 require('dotenv').config();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 
-app.locals.ws = new Map();
+app.locals.ws = new Map(); // id -> ws
 
 app.use(
   cors({
@@ -50,7 +52,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/friends', friendsRouter);
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  console.log('a user connected');
   socket.on('finalShake', (Object) => {
     socket.broadcast.emit(Object.ownerId, Object);
   });
@@ -65,4 +67,4 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`Server running on port:${PORT}`));
+server.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

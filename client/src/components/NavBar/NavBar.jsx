@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import '@fontsource/roboto/500.css';
 import { logoutUserAsync } from '../../redux/actions/authActions';
-import { userLoggedOut } from '../../redux/actions/friendsActions';
 
 const linkStyle = {
   textTransform: 'none',
@@ -52,18 +51,15 @@ export default function NavBar() {
                   <NavLink to="/game" style={linkStyle}>Онлайн</NavLink>
                 </Box>
                 <Box mr={5}>
-                  <NavLink to="/friends" style={linkStyle}>Друзья</NavLink>
-                </Box>
-                <Box mr={5}>
                   <Button
                     style={linkStyle}
                     key="logout"
-                    onClick={() => { dispatch(logoutUserAsync()); dispatch(userLoggedOut()); navigate('/'); }}
+                    onClick={() => { dispatch(logoutUserAsync()); navigate('/'); }}
                   >
                     Выход
                   </Button>
                 </Box>
-                <Box ml={100}>
+                <Box ml={10}>
                   <div style={linkStyle}>
                     Добро пожаловать,
                     {' '}
