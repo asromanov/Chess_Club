@@ -10,8 +10,6 @@ import SignupPage from './components/SignUpPage/SignUpPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import '@fontsource/roboto/400.css';
 import { checkAuthAsync } from './redux/actions/authActions';
-import Footer from './components/Footer/Footer';
-import './main.css';
 import PlayWithFriend from './components/Socket/PlayWithFriend';
 
 export default function App() {
@@ -23,7 +21,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="mainpage">
+    <div>
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -31,12 +29,12 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />} />
-        <Route path="/onlinegame" element={<OnlineGame />} />
-        <Route path="/train" element={<GamePage />} />
-        <Route path="/game" element={<PlayWithFriend />} />
+        <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />}>
+          <Route path="/onlinegame" element={<OnlineGame />} />
+          <Route path="/train" element={<GamePage />} />
+          <Route path="/game" element={<PlayWithFriend />} />
+        </Route>
       </Routes>
-      <Footer />
     </div>
   );
 }

@@ -59,7 +59,7 @@ export default function GamePage() {
 
   return (
     <div style={{
-      display: 'flex', marginTop: '100px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
+      display: 'flex', marginTop: '50px', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
     }}
     >
       {game.current && game.current.isGameOver() ? (

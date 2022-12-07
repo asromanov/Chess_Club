@@ -176,7 +176,7 @@ export default function GamePage() {
   };
 
   const chessBoardLocation = {
-    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '30px', width: '80%', marginLeft: '19%',
 
   };
 
