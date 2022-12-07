@@ -78,7 +78,6 @@ export default function GamePage() {
       if (!(promotionTo === 'r' || promotionTo === 'b' || promotionTo === 'q' || promotionTo === 'n')) {
         // alert('Если не выбирете, ваша пешка автоматически станет ферзем.');
         promotionTo = 'q';
-        // promotionTo = input;
       }
     }
 
@@ -202,7 +201,6 @@ export default function GamePage() {
       <div className="MainContainer">
         <div style={chessBoardLocation}>
           <div className="ChessBox">
-            {/* <Timer time={blackTime} whoMoves={whoMoves} /> */}
             <h2 className="blackTime">
               ⌛
               {' '}
@@ -221,8 +219,8 @@ export default function GamePage() {
                 borderRadius: '5px',
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
               }}
+              darkSquareStyle={{ backgroundColor: '#429963' }}
             />
-            {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
             <h2 className="whiteTime">
               ⌛
               {' '}
@@ -236,7 +234,6 @@ export default function GamePage() {
             </h2>
           </div>
           <div>
-            {/* <h2>{game?.current?.pgn()}</h2> */}
             <div className="PgnContainer">
               <h2 style={{ fontWeight: 'normal' }}>
                 {game?.current?.pgn()}

@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import authReducer from './reducers/authReducer';
 import fenReducer from './reducers/fenReducer';
-import gameReducer from './reducers/gameReducer';
+// import gameReducer from './reducers/gameReducer';
 import moveReducer from './reducers/moveReducer';
 import pagesReducer from './reducers/pagesReducer';
-import wsReducer from './reducers/wsReducer';
+// import wsReducer from './reducers/wsReducer';
 import rootSaga from './sagas/rootSaga';
 import friendsReducer from './reducers/friendsReducer';
 
@@ -16,10 +16,10 @@ const store = configureStore({
     authUser: authReducer,
     friends: friendsReducer,
     pages: pagesReducer,
-    game: gameReducer,
+    // game: gameReducer,
     move: moveReducer,
     fen: fenReducer,
-    ws: wsReducer,
+    // ws: wsReducer,
   },
   middleware: (mid) => [...mid(), sagaMiddleware],
 });

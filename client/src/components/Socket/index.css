@@ -19,13 +19,38 @@ body {
 
 .form-container {
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* .form-container {
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+    margin-top: '50px';
+    width: '80%';
+    margin-left: '19%';
+} */
+
 #mainForm {
     width: 40%;
     height: 60%;
+}
+
+.PgnContainer1 {
+    background-color: rgba(230, 230, 230, 0.596);
+    height: 15em;
+    width: 12em;
+    padding: 10px;
+    overflow-y: scroll;
+    margin: 0 0 0 4%;
+    border-radius: 8px;
+    font-size: 21px;
+}
+
+.PgnContainer::-webkit-scrollbar {
+    width: 0;
+    font-weight: normal;
 }

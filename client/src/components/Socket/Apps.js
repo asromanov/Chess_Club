@@ -85,7 +85,7 @@ class Apps extends React.Component {
           this.state.chessGameObject.move(FENobj.move);
 
           // this means the game has ended
-          if (this.state.chessGameObject.isGameOver() === true) {
+          if (this.state.chessGameObject.game_over() === true) {
             console.log('GAME OVER');
             // trigger modal and end the game
           }
@@ -156,6 +156,7 @@ class Apps extends React.Component {
     );
   }
 
+  // eslint-disable-next-line max-len
   // the object {src , targ} is needed for ValidateMove to trigger properly, even though it isnt used
   // this has to do with how the chessboardjsx library triggers onDrop events
   ValidateMove = ({
@@ -222,7 +223,9 @@ class Apps extends React.Component {
   render() {
     const { inGame } = this.state;
     let UserMenu;
-    console.log(this.state.chessGameObject.fen());
+    console.log(this.state.chessGameObject.turn());
+    const pgn = this.state.chessGameObject.pgn();
+    const turn = this.state.chessGameObject.turn();
     // renders the chessboard component only if the user is in a game
     // if not, renders the menu , so that they can enter a game from it
     if (inGame === false) {
@@ -248,7 +251,17 @@ class Apps extends React.Component {
             onDragOverSquare={this.onDragOverSquare}
             onDrop={this.ValidateMove}
             darkSquareStyle={{ backgroundColor: '#429963' }}
+            boardStyle={{
+              borderRadius: '5px',
+              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+            }}
           />
+          <div className="PgnContainer1">
+            {turn == 'w' ? '⚪' : '⚫' }
+            <div style={{ fontWeight: 'normal' }}>
+              {pgn}
+            </div>
+          </div>
         </div>
       );
     }
