@@ -22,7 +22,7 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
 
-app.locals.ws = new Map(); // id -> ws
+app.locals.ws = new Map();
 
 app.use(
   cors({
