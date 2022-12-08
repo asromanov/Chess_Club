@@ -192,7 +192,7 @@ class PlayWithFriend extends React.Component {
   render() {
     const { inGame } = this.state;
     let UserMenu;
-    console.log(this.state.chessGameObject.turn());
+    console.log(this.state.chessGameObject);
     const pgn = this.state.chessGameObject.pgn();
     const turn = this.state.chessGameObject.turn();
     if (inGame === false) {
@@ -217,7 +217,7 @@ class PlayWithFriend extends React.Component {
             onMouseOverSquare={this.onMouseOverSquare}
             onDragOverSquare={this.onDragOverSquare}
             onDrop={this.ValidateMove}
-            darkSquareStyle={{ backgroundColor: '#429963' }}
+            // darkSquareStyle={{ backgroundColor: '#429963' }}
             boardStyle={{
               borderRadius: '5px',
               boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',

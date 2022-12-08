@@ -17,7 +17,9 @@ export default function GamePage() {
   const nextMoves = useSelector((store) => store.move);
   // console.log(nextMoves);
 
+  // eslint-disable-next-line no-unused-vars
   const [gameOver, setGameOver] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [showCheck, setShowCheck] = useState(false);
 
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ export default function GamePage() {
 
   useEffect(() => {
     if ((game.current.inCheck()) && !(game.current.isCheckmate())) {
-      setShowCheck((prev) => !prev);
+      // setShowCheck((prev) => !prev);
     }
     if (!(game.current.inCheck())) {
       setShowCheck(false);
@@ -102,13 +104,13 @@ export default function GamePage() {
 
     dispatch(setFen(game.current.fen()));
   };
-  const resetGame = () => {
-    game.current.clear();
-    game.current.reset();
-    setGameOver();
-    dispatch(setFen('start'));
-    setTime();
-  };
+  // const resetGame = () => {
+  //   game.current.clear();
+  //   game.current.reset();
+  //   setGameOver();
+  //   dispatch(setFen('start'));
+  //   setTime();
+  // };
 
   const undoHandler = () => {
     game.current.undo();
@@ -225,7 +227,7 @@ export default function GamePage() {
                 borderRadius: '5px',
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
               }}
-              darkSquareStyle={{ backgroundColor: '#429963' }}
+              // darkSquareStyle={{ backgroundColor: '#429963' }}
             />
             {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
             <h2 style={{ marginTop: '20px' }} className="whiteTime">

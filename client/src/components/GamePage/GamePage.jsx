@@ -4,7 +4,7 @@ import { Chess } from 'chess.js';
 import { Button, CardActions } from '@mui/material';
 
 export default function GamePage() {
-  const [fen, setFen] = useState('start');
+  const [fen1, setFen1] = useState('start');
 
   const game = useRef(null);
 
@@ -20,7 +20,7 @@ export default function GamePage() {
     } // exit if the game is over
     const randomIndex = Math.floor(Math.random() * possibleMoves.length);
     game.current.move(possibleMoves[randomIndex]);
-    setFen(game.current.fen());
+    setFen1(game.current.fen());
   }
 
   const onDrop = ({ sourceSquare, targetSquare }) => {
@@ -42,19 +42,19 @@ export default function GamePage() {
     if (move === null) return; // проверка на легальный ход
     // console.log(move);
     // если легальный, устанавливаем новую позиуцию
-    setFen(game.current.fen());
+    setFen1(game.current.fen());
 
     // makeRandomMove();
     setTimeout(makeRandomMove, 200);
   };
 
   console.log(game.current);
-  console.log(fen);
+  console.log(fen1);
 
   const resetGame = () => {
     game.current.clear();
     game.current.reset();
-    setFen('start');
+    setFen1('start');
   };
 
   return (
@@ -64,14 +64,14 @@ export default function GamePage() {
     >
       {game.current && game.current.isGameOver() ? (
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h1>Game Over</h1>
+          <h1>Game over</h1>
           <CardActions>
-            <Button size="big" onClick={resetGame}>Play Again</Button>
+            <Button size="big" onClick={resetGame} style={{ marginLeft: '38px' }}>Play again</Button>
           </CardActions>
         </div>
       ) : <span />}
       <Chessboard
-        position={fen}
+        position={fen1}
         onDrop={onDrop}
         boardStyle={{
           borderRadius: '5px',
