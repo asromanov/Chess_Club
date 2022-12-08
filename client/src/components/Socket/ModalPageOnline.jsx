@@ -1,11 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
-// import { useSelector } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -17,34 +14,15 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-//   align: 'center',
 };
 
 export default function ModalPageOnline({ chess }) {
-  // const fen = useSelector((store) => store.fen);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    // if (chess?.in_checkmate()) {
-    //   setGameOver({
-    //     info1: 'Мат ',
-    //     info2: `${chess?.turn() === 'w' ? 'Черные' : 'Белые'} выиграли`,
-    //   });
-    // }
-    setOpen(true);
-  };
   const handleClose = () => setOpen(false);
 
   const [gameOver, setGameOver] = useState();
-  // console.log('>', chess);
   console.log(chess?.turn());
   useEffect(() => {
-    // console.log('22222');
-    // if ((chess?.inCheck()) && !(chess?.isCheckmate())) {
-    //   setShowCheck((prev) => !prev);
-    // }
-    // if (!(chess?.inCheck())) {
-    //   setShowCheck(false);
-    // }
     if (chess?.in_checkmate()) {
       setGameOver({
         info1: 'Мат ',
@@ -80,18 +58,9 @@ export default function ModalPageOnline({ chess }) {
     }
   }, [chess?.turn()]);
 
-  // if (chess?.in_checkmate()) {
-  //   console.log('1111111111111');
-  //   setGameOver({
-  //     info1: 'Мат ',
-  //     info2: `${chess?.turn() === 'w' ? 'Черные' : 'Белые'} выиграли`,
-  //   });
-  // }
-
   console.log(open);
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
