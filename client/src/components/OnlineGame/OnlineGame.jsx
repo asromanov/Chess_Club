@@ -16,7 +16,9 @@ export default function GamePage() {
   const nextMoves = useSelector((store) => store.move);
   // console.log(nextMoves);
 
+  // eslint-disable-next-line no-unused-vars
   const [gameOver, setGameOver] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [showCheck, setShowCheck] = useState(false);
 
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ export default function GamePage() {
 
   useEffect(() => {
     if ((game.current.inCheck()) && !(game.current.isCheckmate())) {
-      setShowCheck((prev) => !prev);
+      // setShowCheck((prev) => !prev);
     }
     if (!(game.current.inCheck())) {
       setShowCheck(false);
@@ -101,13 +103,13 @@ export default function GamePage() {
 
     dispatch(setFen(game.current.fen()));
   };
-  const resetGame = () => {
-    game.current.clear();
-    game.current.reset();
-    setGameOver();
-    dispatch(setFen('start'));
-    setTime();
-  };
+  // const resetGame = () => {
+  //   game.current.clear();
+  //   game.current.reset();
+  //   setGameOver();
+  //   dispatch(setFen('start'));
+  //   setTime();
+  // };
 
   const undoHandler = () => {
     game.current.undo();
@@ -176,7 +178,7 @@ export default function GamePage() {
   };
 
   const chessBoardLocation = {
-    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', width: '80%', marginLeft: '19%',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '30px', width: '80%', marginLeft: '19%',
 
   };
 

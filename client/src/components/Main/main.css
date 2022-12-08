@@ -100,22 +100,25 @@
 }
 
 .Main {
-    width: 80%;
-    margin-left: 22%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
+
 }
 
 .ButtonContainer {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    /* width: 25%; */
     justify-content: center;
     align-items: center;
     margin-top: 5%;
     margin-right: 32%;
 
+}
+.btnBTN{
+    display: flex;
+align-items: center;
 }
 
 body {
