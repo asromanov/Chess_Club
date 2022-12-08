@@ -1,0 +1,5 @@
+PORT = 3001
+DB_NAME = postgres
+DB_USER = postgres
+DB_PASS = chessClub2022foxes
+DB_HOST = db.mnzvfxsxgwsecrhatedz.supabase.co
