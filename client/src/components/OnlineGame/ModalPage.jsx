@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
@@ -13,9 +14,11 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 300,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: 'none',
   boxShadow: 24,
   p: 4,
+  boxShadow: 1,
+
 //   align: 'center',
 };
 
@@ -79,16 +82,20 @@ export default function ModalPage({ chess }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} style={{ borderRadius: '7px' }}>
           <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
             {gameOver?.info1}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ textAlign: 'center' }}>
-            {gameOver?.info2}
+          <Typography id="modal-modal-description" sx={{ mt: 1 }} style={{ textAlign: 'center' }} color="text.secondary" gutterBottom>
+            <strong>{gameOver?.info2}</strong>
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ textAlign: 'center' }}>
+          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ textAlign: 'center' }}>
             Ходы:
             {' '}
+            {chess?.pgn()}
+          </Typography> */}
+          <Typography sx={{ fontSize: 14, mt: 1 }} style={{ textAlign: 'center' }} color="text.secondary" gutterBottom>
+            <strong>Ходы: </strong>
             {chess?.pgn()}
           </Typography>
         </Box>

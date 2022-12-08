@@ -224,7 +224,7 @@ export default function GamePage() {
                 borderRadius: '5px',
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
               }}
-              darkSquareStyle={{ backgroundColor: '#429963' }}
+              // darkSquareStyle={{ backgroundColor: '#429963' }}
             />
             {/* <Timer time={whiteTime} whoMoves={whoMoves} /> */}
             <h2 style={{ marginTop: '20px' }} className="whiteTime">
