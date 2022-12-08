@@ -35,7 +35,7 @@ class PlayWithFriend extends React.Component {
       sourceSquare: '',
       targetSquare: '',
     };
-    const socketTemp = io('http://localhost:3001');
+    const socketTemp = io('https://chess-euhv.onrender.com');
     socketTemp.on('connect', () => {
       this.setState({ userSocket: socketTemp, userSocketId: socketTemp.id });
 

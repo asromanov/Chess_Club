@@ -10,19 +10,18 @@ const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '/',
     methods: ['GET', 'POST'],
   },
 });
 
+const path = require('path');
 const authRouter = require('./routes/authRouter');
 const friendsRouter = require('./routes/friendsRouter');
 
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
-
-app.locals.ws = new Map();
 
 app.use(
   cors({
@@ -47,9 +46,14 @@ const sessionParser = session({
 app.use(sessionParser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.use('/api/auth', authRouter);
 app.use('/api/friends', friendsRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 io.on('connection', (socket) => {
   console.log('a user connected');
